@@ -177,7 +177,7 @@
     // Tạo nút "LẤY MÃ" ban đầu
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
-            <img src="https://trafficuser.vn/wp-content/uploads/2025/12/Favicon-traffic-user-trafficuser-vn-512.png" alt="icon">
+            <img src="https://trafficuser.vn/wp-content/uploads/2026/05/logo-64x-qua.png" alt="icon">
             <span id="${textId}">LẤY MÃ</span>
         </span>
     `;
