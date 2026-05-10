@@ -102,7 +102,7 @@
             cursor: not-allowed;
         }
         .custom-button-${CONTAINER_ID} img {
-            height: 20px;
+            height: 25px;
             margin-right: 5px;
             display: inline-block;
             width: auto;
