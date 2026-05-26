@@ -226,7 +226,7 @@
             btn.classList.remove('paused-state'); // Xóa trạng thái dừng
             btn.style.cursor = 'pointer';
 
-            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://photos.google.com/share/AF1QipNIfVvDM2Jjrp4372cviIEL8mqWkIKEwX76c9YJ3jswEwNGa8Z2y3Q0vvqkKQSAuA/photo/AF1QipNK6wXL9Z9mulcaQ_JSrVqua2DQX4bi8IfktlCY?key=aGFtUkxDVDk2Z3VyZFZVandhLXVRZ0NSQV8yOTF3" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
+            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://raw.githubusercontent.com/traffic-user/trafficuser/refs/heads/main/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
 
             // Thay thế sự kiện click
             btn.removeEventListener('click', checkIncognitoAndStart);
