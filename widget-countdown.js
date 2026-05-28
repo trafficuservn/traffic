@@ -1,31 +1,20 @@
 (function() {
-    // Cấu hình chung
     const CONTAINER_ID = 'TrafficUser';
     const PASS_CODE = '123@789';
-
     let seconds = 30;
     let interval;
     let counting = false;
-    let isPausedByScroll = false; // Theo dõi trạng thái tạm dừng do cuộn
-    let incognitoChecked = false; // <<< BIẾN MỚI: Theo dõi trạng thái đã kiểm tra ẩn danh thành công chưa
-
-    // --- CẤU HÌNH CHO TÍNH NĂNG CUỘN CHUỘT ---
-    let scrollTimeout; // Biến để lưu trữ timeout
-    const SCROLL_STOP_DELAY = 10000; // 10 giây (10000ms)
-
-    // Thông báo khi dừng cuộn 
+    let isPausedByScroll = false; 
+    let incognitoChecked = false; 
+    let scrollTimeout; 
+    const SCROLL_STOP_DELAY = 10000; 
     const SCROLL_ALERT_MESSAGE = 'Vui lòng thực hiện thao tác cuộn để tiếp tục đếm ngược thời gian.';
-    // -----------------------------------------------------------------
-
-    // Cấu hình các tính năng cũ (giữ nguyên)
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn.';
-    const BASE_COLOR = '#ed1c24'; // Màu đỏ gốc
-    const HOVER_COLOR = '#c40b11'; // Màu đỏ đậm khi hover
-    const ACTIVE_COLOR = '#9a070d'; // Màu đỏ rất đậm khi mousedown/nhấn
-    const READY_COLOR = '#128BE0'; // Màu xanh khi mã sẵn sàng
-
-    // Hàm sao chép mã (Giữ nguyên)
+    const BASE_COLOR = '#ed1c24'; 
+    const HOVER_COLOR = '#c40b11'; 
+    const ACTIVE_COLOR = '#9a070d'; 
+    const READY_COLOR = '#128BE0'; 
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(() => {
@@ -49,35 +38,24 @@
             document.body.removeChild(textArea);
         }
     }
-
-    // Kiểm tra Referrer (Giữ nguyên)
     function checkGoogleReferrer() {
         const referrer = document.referrer;
         if (!referrer) return false;
-
         const refURL = new URL(referrer);
         const refHostname = refURL.hostname.replace(/^www\./, '');
-
         for (const domain of REF_DOMAIN_LIST) {
             if (refHostname === domain) return true;
         }
         return false;
     }
-
-    // Thoát nếu không phải từ Google Search
     if (!checkGoogleReferrer()) return;
-
-    // 1. Tìm container và kiểm tra
     const container = document.getElementById(CONTAINER_ID);
     if (!container) {
         console.error(`Không tìm thấy container có ID: ${CONTAINER_ID}`);
         return;
     }
-
-    // 2. CSS - Định nghĩa style cho nút và thông báo cảnh báo cuộn
     const style = document.createElement('style');
     style.textContent = `
-        /* Styles cho nút chính (Màu nền được kiểm soát qua JS) */
         .custom-button-${CONTAINER_ID} {
             background: ${BASE_COLOR};
             border: 2px solid #fff;
@@ -125,8 +103,6 @@
             font-weight: bold;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
-
-        /* --- STYLE CHO THÔNG BÁO CUỘN ĐỘC LẬP --- */
         #scroll-alert-${CONTAINER_ID} {
             position: fixed;
             top: 50%;
@@ -142,194 +118,118 @@
             line-height: 1.5;
             z-index: 9998;
             display: none;
-            /* TỐI ƯU HIỆU ỨNG VIỀN */
             animation: border-pulse 1s infinite alternate; 
         }
-        
-        /* Keyframes cho hiệu ứng viền trắng chạy bo */
         @keyframes border-pulse {
             0% { 
-                /* Viền trắng mờ, sát cạnh */
                 box-shadow: 0 0 0px rgba(255, 255, 255, 0), 0 0 5px rgba(255, 0, 0, 0.8);
             }
             50% { 
-                /* Viền trắng sáng và sắc nét hơn, ít mờ */
                 box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 0, 0, 0.9); 
             }
             100% { 
-                /* Viền trắng mờ nhẹ, lan ra vừa phải */
                 box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 0, 1);
             }
         }
-        /* --- KẾT THÚC STYLE MỚI --- */
-        
         .custom-button-${CONTAINER_ID}.paused-state {
             background: ${BASE_COLOR};
         }
     `;
     document.head.appendChild(style);
-
-    // 3. HTML Structure
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
-    const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; // ID thông báo cuộn
-
-    // Tạo nút "LẤY MÃ" ban đầu
+    const scrollAlertId = `scroll-alert-${CONTAINER_ID}`;
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
-            <img src="https://raw.githubusercontent.com/traffic-user/trafficuser/aa6fed9f460578b2b8fc49bd0587753063f8006e/icon-nut-64.png" alt="icon">
+            <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-nut-64.png" alt="icon">
             <span id="${textId}">LẤY MÃ</span>
         </span>
     `;
-
-    // Thêm thông báo copy và thông báo cuộn vào body
     const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
     const scrollAlertHtml = `<div id="${scrollAlertId}">${SCROLL_ALERT_MESSAGE}</div>`;
-
     document.body.insertAdjacentHTML('beforeend', alertHtml);
-    document.body.insertAdjacentHTML('beforeend', scrollAlertHtml); // Chèn thông báo cuộn
-
-    // 4. JS Logic
+    document.body.insertAdjacentHTML('beforeend', scrollAlertHtml);
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
     const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
     const scrollAlertElement = document.getElementById(scrollAlertId);
-
-
     function copyCodeHandler() {
         copyToClipboard(PASS_CODE, alertElement);
     }
-
-    // --- LOGIC ĐẾM NGƯỢC ---
     function updateCountdown() {
         if (seconds > 0) {
             btnText.textContent = `Lấy mã sau ${seconds}s`;
             seconds--;
         } else {
-            // Kết thúc đếm ngược
             clearInterval(interval);
-            interval = null; // Thêm
+            interval = null;
             counting = false;
-
-            // Dọn dẹp listener cuộn và timeout + Ẩn thông báo cuộn
             window.removeEventListener('scroll', handleScroll);
             if (scrollTimeout) clearTimeout(scrollTimeout);
-            scrollTimeout = null; // Thêm
+            scrollTimeout = null;
             scrollAlertElement.style.display = 'none';
-            isPausedByScroll = false; // Đảm bảo trạng thái dừng được reset
-            
-            incognitoChecked = false; // Reset cờ để nếu người dùng nhấn lại sau khi hết giờ
-
-            // Màu xanh lá cây (sẵn sàng)
-            btn.style.background = BASE_COLOR; // <<< SỬA: Dùng READY_COLOR
+            isPausedByScroll = false;
+            incognitoChecked = false;
+            btn.style.background = BASE_COLOR;
             btn.classList.remove('disabled-state');
-            btn.classList.remove('paused-state'); // Xóa trạng thái dừng
+            btn.classList.remove('paused-state');
             btn.style.cursor = 'pointer';
-
-            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://raw.githubusercontent.com/traffic-user/trafficuser/refs/heads/main/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
-
-            // Thay thế sự kiện click
+            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
-
-            // Khôi phục hiệu ứng hover/active cho trạng thái sẵn sàng
-            restoreInteractionListeners(BASE_COLOR); // <<< SỬA: Dùng READY_COLOR
+            restoreInteractionListeners(BASE_COLOR);
         }
     }
-    
-    // --- TẠM DỪNG VÀ TIẾP TỤC BỘ ĐẾM ---
     function pauseCountdown() {
-        if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return; // Thêm interval check
-        
+        if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return;
         clearInterval(interval);
-        interval = null; // Đặt về null
+        interval = null;
         isPausedByScroll = true;
         btn.classList.add('paused-state');
-    }
-    
+    } 
     function resumeCountdown() {
-        // Chỉ chạy lại nếu đang đếm và đang bị tạm dừng do cuộn
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        
-        // Cập nhật lại số giây trên nút ngay khi chạy tiếp
         btnText.textContent = `Lấy mã sau ${seconds}s`; 
-        
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
         btn.classList.remove('paused-state');
     }
-
     function startCountdown() {
-        // Chỉ chạy nếu chưa đếm hoặc chưa hết giờ
         if (counting || seconds <= 0) return; 
-        
         counting = true;
-        incognitoChecked = true; // Đánh dấu đã kiểm tra thành công
-
+        incognitoChecked = true;
         btn.style.background = BASE_COLOR;
-
         btn.classList.add('disabled-state');
         btn.style.cursor = 'not-allowed';
-
-        // Xóa listener hover
         removeInteractionListeners();
-        
-        // Cần xóa listener `checkIncognitoAndStart` ngay khi bắt đầu đếm
         btn.removeEventListener('click', checkIncognitoAndStart); 
-        // Đảm bảo không có listener nào được gán cho nút khi đang đếm, vì nó đã disable và cursor là not-allowed.
-
-        // Bắt đầu đếm ngược
         updateCountdown();
         interval = setInterval(updateCountdown, 1000);
-
-        // Bắt đầu theo dõi sự kiện cuộn
         window.addEventListener('scroll', handleScroll);
-        
-        // Khởi động timeout ban đầu
         setScrollStopTimeout();
     }
-
-    // --- LOGIC Xử lý sự kiện cuộn chuột ĐỘC LẬP ---
-    
     function showScrollAlert() {
-        if (counting && seconds > 0 && !isPausedByScroll) { // Chỉ hiển thị nếu đang đếm và chưa bị tạm dừng
+        if (counting && seconds > 0 && !isPausedByScroll) {
             scrollAlertElement.style.display = 'block';
-            
-            // TẠM DỪNG đếm ngược khi thông báo hiển thị
             pauseCountdown(); 
         }
     }
-    
     function hideScrollAlert() {
         scrollAlertElement.style.display = 'none';
-        
-        // CHẠY LẠI đếm ngược khi thông báo ẩn (chỉ khi nó bị tạm dừng)
         resumeCountdown(); 
-    }
-    
+    }  
     function setScrollStopTimeout() {
           if (scrollTimeout) {
             clearTimeout(scrollTimeout);
             scrollTimeout = null;
         }
-        
-        // Đặt timeout mới
         scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
     }
-
     function handleScroll() {
         if (!counting || seconds <= 0) return;
-
-        // 1. Ẩn thông báo ngay lập tức khi cuộn
         hideScrollAlert();
-
-        // 2. Thiết lập timeout mới: nếu dừng cuộn, thông báo sẽ hiển thị lại
         setScrollStopTimeout();
     }
-
-    // --- KẾT THÚC LOGIC ĐỘC LẬP ---
-
-    // --- Quản lý Hiệu ứng Tương tác (Giữ nguyên) ---
     function interactionListeners(enable, baseColor = BASE_COLOR) {
         function handleMouseEnter() {
             if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
@@ -343,7 +243,6 @@
         function handleMouseUp() {
             if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
         }
-
         if(enable) {
             btn.addEventListener('mouseenter', handleMouseEnter);
             btn.addEventListener('mouseleave', handleMouseLeave);
@@ -356,112 +255,79 @@
             btn.removeEventListener('mouseup', handleMouseUp);
         }
     }
-
     function removeInteractionListeners() {
         interactionListeners(false);
     }
-
     function restoreInteractionListeners(baseColor = BASE_COLOR) {
         if (!counting) {
             interactionListeners(false);
             interactionListeners(true, baseColor);
         }
     }
-
-    // --- Xử lý visibilitychange ---
     function handleVisibilityChange() {
         if (document.hidden) {
-            // Khi tab ẩn, luôn dừng interval 
             if (interval) {
                 clearInterval(interval);
-                interval = null; // Đặt về null
+                interval = null;
             }
             if (scrollTimeout) {
                 clearTimeout(scrollTimeout);
-                scrollTimeout = null; // Đặt về null
+                scrollTimeout = null;
             }
-            hideScrollAlert(); // Ẩn thông báo khi tab bị ẩn
+            hideScrollAlert();
         } else {
-            // Khi tab hiển thị lại
-            // Chỉ chạy lại nếu interval đang là null (đang bị dừng) VÀ chưa hết giờ VÀ không bị dừng do cuộn
             if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
                 btn.style.background = BASE_COLOR;
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
-            // Chỉ đặt lại timeout cuộn nếu đang đếm ngược
             if (counting && seconds > 0) {
-                 setScrollStopTimeout(); // Tiếp tục kiểm tra dừng cuộn
+                 setScrollStopTimeout();
             }
-
-
             if (seconds === 0 && !counting) {
-                 btn.style.background = BASE_COLOR; // <<< SỬA: Dùng READY_COLOR
-                 restoreInteractionListeners(BASE_COLOR); // <<< SỬA: Dùng READY_COLOR
+                 btn.style.background = BASE_COLOR;R
+                 restoreInteractionListeners(BASE_COLOR);
             }
         }
     }
-
     document.addEventListener('visibilitychange', handleVisibilityChange);
-    // -----------------------------------------------------------------
-
-    // --- Logic Kiểm tra Ẩn danh và Bắt đầu Đếm ngược ---
     function checkIncognitoAndStart() {
-        // <<< LOGIC MỚI: Thoát nếu đã kiểm tra thành công và đang đếm
         if (incognitoChecked && counting) {
             return;
         }
-
         removeInteractionListeners();
-
         detectIncognito().then((result) => {
             if (result.isPrivate) {
-                // Tình huống ẩn danh: dừng mọi thứ, hiển thị thông báo
                 if (interval) clearInterval(interval);
-                interval = null; // Đặt về null
+                interval = null;
                 if (scrollTimeout) clearTimeout(scrollTimeout);
-                scrollTimeout = null; // Đặt về null
+                scrollTimeout = null;
                 window.removeEventListener('scroll', handleScroll);
-                hideScrollAlert(); // Ẩn thông báo
-
+                hideScrollAlert();
                 counting = false;
-                isPausedByScroll = false; // Reset cờ tạm dừng
-                incognitoChecked = false; // Không đánh dấu thành công
-
+                isPausedByScroll = false;
+                incognitoChecked = false;
                 btn.style.background = BASE_COLOR;
                 btn.classList.add('disabled-state');
                 btn.classList.remove('paused-state');
                 btn.style.cursor = 'default';
                 btnText.textContent = PRIVATE_MODE_MESSAGE;
-
-                // KHÔNG xóa/thêm listener click ở đây, vì setTimeout ở dưới sẽ tự làm
-                // btn.removeEventListener('click', checkIncognitoAndStart); 
-
                 setTimeout(() => {
-                    // Đưa nút về trạng thái ban đầu sau 5 giây
                     btn.style.background = BASE_COLOR;
                     btn.classList.remove('disabled-state');
                     btn.style.cursor = 'pointer';
                     btnText.textContent = 'LẤY MÃ';
-                    // Đảm bảo listener click ban đầu vẫn còn (đã gán ở dòng cuối)
                     restoreInteractionListeners(BASE_COLOR);
                 }, 5000);
 
             } else {
-                // Tình huống KHÔNG ẩn danh: bắt đầu đếm ngược
-                incognitoChecked = true; // <<< Đánh dấu đã kiểm tra thành công
+                incognitoChecked = true;
                 startCountdown();
             }
         });
     }
-
-    // Gán sự kiện click ban đầu
     btn.addEventListener('click', checkIncognitoAndStart);
-    // Gán hiệu ứng tương tác ban đầu
     restoreInteractionListeners(BASE_COLOR);
-
-
-    // *** Hàm detectIncognito phức tạp (Giữ nguyên) ***
     const detectIncognito = function () {
 		return new Promise(function (resolve, reject) {
 			var browserName = "Unknown";
@@ -508,9 +374,6 @@
 			function isMSIE() {
 				return (navigator.msSaveBlob !== undefined && assertEvalToString(39));
 			}
-			/**
-			 * Safari (Safari for iOS & macOS)
-			 **/
 			function newSafariTest() {
 				var tmp_name = String(Math.random());
 				try {
@@ -571,9 +434,6 @@
 					oldSafariTest();
 				}
 			}
-			/**
-			 * Chrome
-			 **/
 			function getQuotaLimit() {
 				var w = window;
 				if (w.performance !== undefined &&
@@ -583,7 +443,6 @@
 				}
 				return 1073741824;
 			}
-			// >= 76
 			function storageQuotaChromePrivateTest() {
 				navigator.webkitTemporaryStorage.queryUsageAndQuota(function (_, quota) {
 					var quotaInMib = Math.round(quota / (1024 * 1024));
@@ -593,7 +452,6 @@
 					reject(new Error("detectIncognito somehow failed to query storage quota: " + e.message));
 				});
 			}
-			// 50 to 75
 			function oldChromePrivateTest() {
 				var fs = window.webkitRequestFileSystem;
 				var success = function () {
@@ -612,15 +470,9 @@
 					oldChromePrivateTest();
 				}
 			}
-			/**
-			 * Firefox
-			 **/
 			function firefoxPrivateTest() {
 				__callback(navigator.serviceWorker === undefined);
 			}
-			/**
-			 * MSIE
-			 **/
 			function msiePrivateTest() {
 				__callback(window.indexedDB === undefined);
 			}
@@ -649,5 +501,4 @@
 			main();
 		});
 	};
-    // *** Kết thúc Hàm detectIncognito ***
 })();
