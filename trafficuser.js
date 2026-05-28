@@ -161,7 +161,7 @@
 
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
-            <img src="https://trafficuser.vn/wp-content/uploads/2026/05/icon-nut-64.png" alt="icon">
+            <img src="https://raw.githubusercontent.com/traffic-user/trafficuser/aa6fed9f460578b2b8fc49bd0587753063f8006e/icon-nut-64.png" alt="icon">
             <span id="${textId}">LẤY MÃ</span>
         </span>
     `;
