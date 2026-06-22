@@ -90,11 +90,11 @@
         /* ĐÃ ĐIỀU CHỈNH: Tam giác to tràn sát viền tròn giống ảnh image_64c9aa.png */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 42px !important;
-            height: 42px !important;
+            width: 50px !important;
+            height: 50px !important;
             fill: #ffffff !important;
             /* Cân chỉnh tọa độ quang học cho tam giác kích thước lớn */
-            transform: translateX(4px) !important;
+            transform: translateX(0px) !important;
             display: block !important;
             margin: 0 !important;
             padding: 0 !important;
