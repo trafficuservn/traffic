@@ -90,8 +90,8 @@
         /* ĐÃ CHỈNH: Phóng to tam giác lên gần sát viền tròn (từ 16px lên 32px) */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 40px !important;
+            height: 40px !important;
             fill: #ffffff !important;
             /* Dịch chuyển nhẹ sang phải một chút để cân tâm quang học chuẩn nhất khi phóng to */
             transform: translateX(3px) !important;
