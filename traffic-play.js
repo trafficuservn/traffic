@@ -117,8 +117,8 @@
             padding: 10px 18px !important;
             font-size: 20px !important;
             background: rgba(238, 47, 46, 0.95) !important;
-            border: 2px solid yellow !important;
-            color: yellow !important;
+            border: 2px solid #ffffff !important;
+            color: #ffffff !important;
         }
         .custom-button-${CONTAINER_ID}.finished-state {
             border-radius: 6px !important;
