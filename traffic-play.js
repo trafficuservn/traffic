@@ -4,11 +4,7 @@
     let seconds = 70;
     let interval;
     let counting = false;
-    let isPausedByScroll = false; 
     let incognitoChecked = false; 
-    let scrollTimeout; 
-    const SCROLL_STOP_DELAY = 10000; 
-    const SCROLL_ALERT_MESSAGE = 'Vui lòng cuộn trang để tiếp tục đếm ngược!';
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn.';
     const BASE_COLOR = '#EE2F2E'; 
@@ -52,8 +48,6 @@
         return false;
     }
 
-    // --- LƯU Ý KHI TEST: Bỏ comment dòng dưới nếu muốn test trực tiếp không qua Google ---
-    // document.body.innerHTML += '<div id="trafficuser"></div>'; // Tạo sẵn hộp chứa nếu chưa có
     if (!checkGoogleReferrer()) return;
 
     const container = document.getElementById(CONTAINER_ID);
@@ -168,7 +162,6 @@
     const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
     document.body.insertAdjacentHTML('beforeend', alertHtml);
 
-    // ĐỊNH NGHĨA BIẾN LÊN TRƯỚC KHI SỬ DỤNG
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
     const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
@@ -185,10 +178,6 @@
             clearInterval(interval);
             interval = null;
             counting = false;
-            window.removeEventListener('scroll', handleScroll);
-            if (scrollTimeout) clearTimeout(scrollTimeout);
-            scrollTimeout = null; 
-            isPausedByScroll = false; 
             incognitoChecked = false; 
             btn.style.background = BASE_COLOR; 
             btn.classList.remove('disabled-state');
@@ -203,21 +192,6 @@
         }
     }
 
-    function pauseCountdown() {
-        if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return;
-        clearInterval(interval);
-        interval = null;
-        isPausedByScroll = true;
-    }
-
-    function resumeCountdown() {
-        if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btn.classList.remove('alert-state'); 
-        btnText.textContent = seconds; 
-        interval = setInterval(updateCountdown, 1000);
-        isPausedByScroll = false;
-    }
-
     function startCountdown() {
         if (counting || seconds <= 0) return; 
         counting = true;
@@ -229,34 +203,6 @@
         btn.removeEventListener('click', checkIncognitoAndStart); 
         updateCountdown();
         interval = setInterval(updateCountdown, 1000);
-        window.addEventListener('scroll', handleScroll);
-        setScrollStopTimeout();
-    }
-
-    function showScrollAlert() {
-        if (counting && seconds > 0) { 
-            pauseCountdown(); 
-            btn.classList.add('alert-state'); 
-            btnText.textContent = SCROLL_ALERT_MESSAGE; 
-        }
-    }
-
-    function hideScrollAlert() {
-        resumeCountdown(); 
-    }
-
-    function setScrollStopTimeout() {
-         if (scrollTimeout) {
-            clearTimeout(scrollTimeout);
-            scrollTimeout = null;
-        }
-        scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
-    }
-
-    function handleScroll() {
-        if (!counting || seconds <= 0) return;
-        hideScrollAlert();
-        setScrollStopTimeout();
     }
 
     function removeInteractionListeners() {}
@@ -265,14 +211,12 @@
     function handleVisibilityChange() {
         if (document.hidden) {
             if (interval) { clearInterval(interval); interval = null; }
-            if (scrollTimeout) { clearTimeout(scrollTimeout); scrollTimeout = null; }
         } else {
-            if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
+            if (interval === null && seconds > 0 && counting) { 
                 btn.style.background = BASE_COLOR;
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
-            if (counting && seconds > 0) { setScrollStopTimeout(); }
         }
     }
 
@@ -295,7 +239,6 @@
         });
     }
 
-    // ĐÃ CHUYỂN XUỐNG DƯỚI CÙNG SAU KHI ĐỊNH NGHĨA BIẾN BTN
     btn.addEventListener('click', checkIncognitoAndStart);
 
     const detectIncognito = function () {
