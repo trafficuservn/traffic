@@ -1,6 +1,7 @@
 (function() {
     const CONTAINER_ID = 'trafficuser';
-    const PASS_CODE = '724@289';
+    const PASS_CODE_LIST = ['724@289', '888@123', '999@678', '456@abc']; 
+    let currentPassCode = '';
     let seconds = 70;
     let interval;
     let counting = false;
