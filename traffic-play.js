@@ -116,7 +116,7 @@
             max-width: none !important;
             max-height: none !important;
             padding: 8px 16px !important;
-            font-size: 14px !important;
+            font-size: 16px !important;
         }
         .custom-button-${CONTAINER_ID}.disabled-state {
             cursor: not-allowed !important;
