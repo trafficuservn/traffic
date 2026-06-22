@@ -83,7 +83,7 @@
             position: relative !important;
             box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
             font-weight: 700 !important;
-            font-size: 16px !important;
+            font-size: 24px !important;
             line-height: 1 !important;
         }
         
