@@ -36,22 +36,32 @@
             document.body.removeChild(textArea);
         }
     }
+
     function checkGoogleReferrer() {
         const referrer = document.referrer;
         if (!referrer) return false;
-        const refURL = new URL(referrer);
-        const refHostname = refURL.hostname.replace(/^www\./, '');
-        for (const domain of REF_DOMAIN_LIST) {
-            if (refHostname === domain) return true;
+        try {
+            const refURL = new URL(referrer);
+            const refHostname = refURL.hostname.replace(/^www\./, '');
+            for (const domain of REF_DOMAIN_LIST) {
+                if (refHostname === domain) return true;
+            }
+        } catch(e) {
+            return false;
         }
         return false;
     }
+
+    // --- LƯU Ý KHI TEST: Bỏ comment dòng dưới nếu muốn test trực tiếp không qua Google ---
+    // document.body.innerHTML += '<div id="trafficuser"></div>'; // Tạo sẵn hộp chứa nếu chưa có
     if (!checkGoogleReferrer()) return;
+
     const container = document.getElementById(CONTAINER_ID);
     if (!container) {
         console.error(`Không tìm thấy container có ID: ${CONTAINER_ID}`);
         return;
     }
+
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
@@ -91,7 +101,6 @@
             margin: 0 !important;
             padding: 0 !important;
         }
-        /* Trạng thái khi hiển thị thông báo dừng cuộn hoặc ẩn danh: tự bung nút dài ra để hiện chữ */
         .custom-button-${CONTAINER_ID}.alert-state {
             border-radius: 6px !important;
             width: auto !important;
@@ -101,8 +110,8 @@
             padding: 10px 18px !important;
             font-size: 14px !important;
             background: rgba(238, 47, 46, 0.95) !important;
-            border: 2px solid yellow !important; /* Thêm viền vàng cảnh báo */
-            color: yellow !important; /* Đổi màu chữ thông báo thành màu vàng */
+            border: 2px solid yellow !important;
+            color: yellow !important;
         }
         .custom-button-${CONTAINER_ID}.finished-state {
             border-radius: 6px !important;
@@ -142,6 +151,7 @@
         }
     `;
     document.head.appendChild(style);
+
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
     
@@ -154,8 +164,11 @@
             </span>
         </span>
     `;
+
     const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
     document.body.insertAdjacentHTML('beforeend', alertHtml);
+
+    // ĐỊNH NGHĨA BIẾN LÊN TRƯỚC KHI SỬ DỤNG
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
     const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
@@ -163,6 +176,7 @@
     function copyCodeHandler() {
         copyToClipboard(PASS_CODE, alertElement);
     }
+
     function updateCountdown() {
         if (seconds > 0) {
             btnText.textContent = seconds;
@@ -188,19 +202,22 @@
             restoreInteractionListeners(BASE_COLOR); 
         }
     }
+
     function pauseCountdown() {
         if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return;
         clearInterval(interval);
         interval = null;
         isPausedByScroll = true;
     }
+
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btn.classList.remove('alert-state'); // Thu nhỏ về nút tròn đếm số tiếp tục
+        btn.classList.remove('alert-state'); 
         btnText.textContent = seconds; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
     }
+
     function startCountdown() {
         if (counting || seconds <= 0) return; 
         counting = true;
@@ -215,33 +232,36 @@
         window.addEventListener('scroll', handleScroll);
         setScrollStopTimeout();
     }
+
     function showScrollAlert() {
         if (counting && seconds > 0) { 
             pauseCountdown(); 
-            btn.classList.add('alert-state'); // Cho nút dãn rộng ra tại chỗ
-            btnText.textContent = SCROLL_ALERT_MESSAGE; // Hiện chữ thông báo cuộn màu vàng
+            btn.classList.add('alert-state'); 
+            btnText.textContent = SCROLL_ALERT_MESSAGE; 
         }
     }
+
     function hideScrollAlert() {
         resumeCountdown(); 
     }
+
     function setScrollStopTimeout() {
-          if (scrollTimeout) {
+         if (scrollTimeout) {
             clearTimeout(scrollTimeout);
             scrollTimeout = null;
         }
         scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
     }
+
     function handleScroll() {
         if (!counting || seconds <= 0) return;
         hideScrollAlert();
         setScrollStopTimeout();
     }
-    function interactionListeners(enable, baseColor = BASE_COLOR) {
-        // Giữ nguyên các hàm hover click
-    }
+
     function removeInteractionListeners() {}
     function restoreInteractionListeners(baseColor = BASE_COLOR) {}
+
     function handleVisibilityChange() {
         if (document.hidden) {
             if (interval) { clearInterval(interval); interval = null; }
@@ -255,7 +275,9 @@
             if (counting && seconds > 0) { setScrollStopTimeout(); }
         }
     }
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
+
     function checkIncognitoAndStart() {
         if (incognitoChecked && counting) return;
         detectIncognito().then((result) => {
@@ -272,52 +294,55 @@
             }
         });
     }
+
+    // ĐÃ CHUYỂN XUỐNG DƯỚI CÙNG SAU KHI ĐỊNH NGHĨA BIẾN BTN
     btn.addEventListener('click', checkIncognitoAndStart);
+
     const detectIncognito = function () {
-		return new Promise(function (resolve) {
-			var browserName = "Unknown";
-			function __callback(isPrivate) { resolve({ isPrivate: isPrivate, browserName: browserName }); }
-			function identifyChromium() {
-				var ua = navigator.userAgent;
-				if (ua.match(/Chrome/)) {
-					if (navigator.brave !== undefined) return "Brave";
-					else if (ua.match(/Edg/)) return "Edge";
-					else if (ua.match(/OPR/)) return "Opera";
-					return "Chrome";
-				} else return "Chromium";
-			}
-			function assertEvalToString(value) { return value === eval.toString().length; }
-			function isSafari() { var v = navigator.vendor; return (v !== undefined && v.indexOf("Apple") === 0 && assertEvalToString(37)); }
-			function isChrome() { var v = navigator.vendor; return (v !== undefined && v.indexOf("Google") === 0 && assertEvalToString(33)); }
-			function isFirefox() { return (document.documentElement !== undefined && document.documentElement.style.MozAppearance !== undefined && assertEvalToString(37)); }
-			function isMSIE() { return (navigator.msSaveBlob !== undefined && assertEvalToString(39)); }
-			function newSafariTest() {
-				var tmp_name = String(Math.random());
-				try {
-					var db = window.indexedDB.open(tmp_name, 1);
-					db.onupgradeneeded = function (i) {
-						var _a, _b;
-						var res = (_a = i.target) === null || _a === void 0 ? void 0 : _a.result;
-						try { res.createObjectStore("test", { autoIncrement: true }).put(new Blob); __callback(false); } 
+        return new Promise(function (resolve) {
+            var browserName = "Unknown";
+            function __callback(isPrivate) { resolve({ isPrivate: isPrivate, browserName: browserName }); }
+            function identifyChromium() {
+                var ua = navigator.userAgent;
+                if (ua.match(/Chrome/)) {
+                    if (navigator.brave !== undefined) return "Brave";
+                    else if (ua.match(/Edg/)) return "Edge";
+                    else if (ua.match(/OPR/)) return "Opera";
+                    return "Chrome";
+                } else return "Chromium";
+            }
+            function assertEvalToString(value) { return value === eval.toString().length; }
+            function isSafari() { var v = navigator.vendor; return (v !== undefined && v.indexOf("Apple") === 0 && assertEvalToString(37)); }
+            function isChrome() { var v = navigator.vendor; return (v !== undefined && v.indexOf("Google") === 0 && assertEvalToString(33)); }
+            function isFirefox() { return (document.documentElement !== undefined && document.documentElement.style.MozAppearance !== undefined && assertEvalToString(37)); }
+            function isMSIE() { return (navigator.msSaveBlob !== undefined && assertEvalToString(39)); }
+            function newSafariTest() {
+                var tmp_name = String(Math.random());
+                try {
+                    var db = window.indexedDB.open(tmp_name, 1);
+                    db.onupgradeneeded = function (i) {
+                        var _a, _b;
+                        var res = (_a = i.target) === null || _a === void 0 ? void 0 : _a.result;
+                        try { res.createObjectStore("test", { autoIncrement: true }).put(new Blob); __callback(false); } 
                         catch (e) { var message = e; if (e instanceof Error) message = (_b = e.message) !== null && _b !== void 0 ? _b : e; if (typeof message !== 'string') return __callback(false); var matchesExpectedError = /BlobURLs are not yet supported/.test(message); return __callback(matchesExpectedError); } 
                         finally { res.close(); window.indexedDB.deleteDatabase(tmp_name); }
-					};
-				} catch (e) { return __callback(false); }
-			}
-			function oldSafariTest() {
-				var openDB = window.openDatabase; var storage = window.localStorage;
-				try { openDB(null, null, null, null); } catch (e) { return __callback(true); }
-				try { storage.setItem("test", "1"); storage.removeItem("test"); } catch (e) { return __callback(true); }
-				return __callback(false);
-			}
-			function main() {
-				if (isSafari()) { browserName = 'Safari'; if (navigator.maxTouchPoints !== undefined) newSafariTest(); else oldSafariTest(); }
-				else if (isChrome()) { browserName = identifyChromium(); if (self.Promise !== undefined && self.Promise.allSettled !== undefined) { navigator.webkitTemporaryStorage.queryUsageAndQuota(function (_, quota) { var quotaInMib = Math.round(quota / (1024 * 1024)); var quotaLimitInMib = Math.round((performance.memory ? performance.memory.jsHeapSizeLimit : 1073741824) / (1024 * 1024)) * 2; __callback(quotaInMib < quotaLimitInMib); }, function () { resolve({isPrivate: false}); }); } else { var fs = window.webkitRequestFileSystem; fs(0, 1, function () { __callback(false); }, function () { __callback(true); }); } }
-				else if (isFirefox()) { browserName = "Firefox"; __callback(navigator.serviceWorker === undefined); }
-				else if (isMSIE()) { browserName = "Internet Explorer"; __callback(window.indexedDB === undefined); }
-				else __callback(false);
-			}
-			main();
-		});
-	};
+                    };
+                } catch (e) { return __callback(false); }
+            }
+            function oldSafariTest() {
+                var openDB = window.openDatabase; var storage = window.localStorage;
+                try { openDB(null, null, null, null); } catch (e) { return __callback(true); }
+                try { storage.setItem("test", "1"); storage.removeItem("test"); } catch (e) { return __callback(true); }
+                return __callback(false);
+            }
+            function main() {
+                if (isSafari()) { browserName = 'Safari'; if (navigator.maxTouchPoints !== undefined) newSafariTest(); else oldSafariTest(); }
+                else if (isChrome()) { browserName = identifyChromium(); if (self.Promise !== undefined && self.Promise.allSettled !== undefined) { navigator.webkitTemporaryStorage.queryUsageAndQuota(function (_, quota) { var quotaInMib = Math.round(quota / (1024 * 1024)); var quotaLimitInMib = Math.round((performance.memory ? performance.memory.jsHeapSizeLimit : 1073741824) / (1024 * 1024)) * 2; __callback(quotaInMib < quotaLimitInMib); }, function () { resolve({isPrivate: false}); }); } else { var fs = window.webkitRequestFileSystem; fs(0, 1, function () { __callback(false); }, function () { __callback(true); }); } }
+                else if (isFirefox()) { browserName = "Firefox"; __callback(navigator.serviceWorker === undefined); }
+                else if (isMSIE()) { browserName = "Internet Explorer"; __callback(window.indexedDB === undefined); }
+                else __callback(false);
+            }
+            main();
+        });
+    };
 })();
