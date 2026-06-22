@@ -13,10 +13,12 @@
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn!';
     const BASE_COLOR = '#EE2F2E'; 
+    
     function getRandomPassCode() {
         const randomIndex = Math.floor(Math.random() * PASS_CODE_LIST.length);
         return PASS_CODE_LIST[randomIndex];
     }
+
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(() => {
@@ -40,6 +42,7 @@
             document.body.removeChild(textArea);
         }
     }
+
     function checkGoogleReferrer() {
         const referrer = document.referrer;
         if (!referrer) return false;
@@ -54,12 +57,15 @@
         }
         return false;
     }
+
     if (!checkGoogleReferrer()) return;
+
     const container = document.getElementById(CONTAINER_ID);
     if (!container) {
         console.error(`Không tìm thấy container có ID: ${CONTAINER_ID}`);
         return;
     }
+
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
@@ -83,7 +89,7 @@
             z-index: 999 !important;
             user-select: none !important;
             transition: all 0.2s ease !important;
-            position: relative !important;
+            position: relative !important; /* Đặt làm mốc tọa độ cho thông báo copy */
             box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
             font-weight: 700 !important;
             font-size: 20px !important;
@@ -106,10 +112,10 @@
             max-width: none !important;
             max-height: none !important;
             padding: 10px 18px !important;
-            font-size: 18px !important;
+            font-size: 20px !important;
             background: rgba(238, 47, 46, 0.95) !important;
-            border: 2px solid #ffffff !important;
-            color: #ffffff !important;
+            border: 2px solid #ffffff !important; /* Đổi viền ẩn danh sang trắng */
+            color: #ffffff !important;        /* Đổi chữ ẩn danh sang trắng */
         }
         .custom-button-${CONTAINER_ID}.finished-state {
             border-radius: 6px !important;
@@ -134,18 +140,32 @@
             margin: 0 !important;
             padding: 0 !important;
         }
+        /* CSS cho bong bóng thông báo copy ngay trên nút */
         #copy-alert-${CONTAINER_ID} {
-            position: fixed !important;
-            top: 20px !important;
-            right: 20px !important;
-            background: ${BASE_COLOR} !important;
+            position: absolute !important;
+            bottom: 130% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            background: #4CAF50 !important; /* Đổi thành xanh lá cho đẹp hoặc dùng ${BASE_COLOR} */
             color: white !important;
-            padding: 8px 15px !important;
+            padding: 6px 14px !important;
             border-radius: 5px !important;
             display: none !important;
-            z-index: 9999 !important;
+            z-index: 99999 !important;
             font-weight: bold !important;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+        }
+        #copy-alert-${CONTAINER_ID}::after {
+            content: "" !important;
+            position: absolute !important;
+            top: 100% !important;
+            left: 50% !important;
+            margin-left: -6px !important;
+            border-width: 6px !important;
+            border-style: solid !important;
+            border-color: #4CAF50 transparent transparent transparent !important;
         }
         #scroll-alert-${CONTAINER_ID} {
             position: fixed !important;
@@ -172,9 +192,12 @@
         }
     `;
     document.head.appendChild(style);
+
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`;
+    
+    // Đưa cấu trúc HTML của thẻ thông báo vào bên trong Nút để cố định vị trí cạnh nhau
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <span id="${textId}">
@@ -182,19 +205,22 @@
                     <path d="M8 5v14l11-7z"/>
                 </svg>
             </span>
+            <div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>
         </span>
     `;
-    const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
+
     const scrollAlertHtml = `<div id="${scrollAlertId}">${SCROLL_ALERT_MESSAGE}</div>`;
-    document.body.insertAdjacentHTML('beforeend', alertHtml);
     document.body.insertAdjacentHTML('beforeend', scrollAlertHtml);
+
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
     const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
     const scrollAlertElement = document.getElementById(scrollAlertId);
+    
     function copyCodeHandler() {
         copyToClipboard(currentPassCode, alertElement); 
     }
+
     function updateCountdown() {
         if (seconds > 0) {
             btnText.textContent = seconds;
@@ -204,42 +230,52 @@
             interval = null;
             counting = false;
             incognitoChecked = false; 
+            
             window.removeEventListener('scroll', handleScroll);
             if (scrollTimeout) clearTimeout(scrollTimeout);
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false;
+
             btn.style.background = BASE_COLOR; 
             btn.classList.remove('disabled-state');
             btn.classList.remove('alert-state'); 
+            
             btn.classList.add('finished-state'); 
             btn.style.cursor = 'pointer';
+            
+            // Icon SVG copy màu trắng
             btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 18px !important; width: 18px !important; margin: -4px 0 0 6px !important; vertical-align: middle; display: inline-block; fill: #ffffff;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
         }
     }
+
     function pauseCountdown() {
         if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return;
         clearInterval(interval);
         interval = null;
         isPausedByScroll = true;
     }
+
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
         btnText.textContent = seconds; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
     }
+
     function showScrollAlert() {
         if (counting && seconds > 0 && !isPausedByScroll) {
             scrollAlertElement.style.display = 'block';
             pauseCountdown(); 
         }
     }
+
     function hideScrollAlert() {
         if (scrollAlertElement) scrollAlertElement.style.display = 'none';
         resumeCountdown(); 
     }
+
     function setScrollStopTimeout() {
         if (scrollTimeout) {
             clearTimeout(scrollTimeout);
@@ -247,14 +283,17 @@
         }
         scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
     }
+
     function handleScroll() {
         if (!counting || seconds <= 0) return;
         hideScrollAlert();
         setScrollStopTimeout();
     }
+
     function startCountdown() {
         if (counting || seconds <= 0) return; 
         currentPassCode = getRandomPassCode();
+        
         counting = true;
         incognitoChecked = true;
         btn.style.background = BASE_COLOR;
@@ -263,9 +302,11 @@
         btn.removeEventListener('click', checkIncognitoAndStart); 
         updateCountdown();
         interval = setInterval(updateCountdown, 1000);
+        
         window.addEventListener('scroll', handleScroll);
         setScrollStopTimeout();
     }
+
     function handleVisibilityChange() {
         if (document.hidden) {
             if (interval) { clearInterval(interval); interval = null; }
@@ -282,7 +323,9 @@
             }
         }
     }
+
     document.addEventListener('visibilitychange', handleVisibilityChange);
+
     function checkIncognitoAndStart() {
         if (incognitoChecked && counting) return;
         detectIncognito().then((result) => {
@@ -299,7 +342,9 @@
             }
         });
     }
+
     btn.addEventListener('click', checkIncognitoAndStart);
+
     const detectIncognito = function () {
         return new Promise(function (resolve) {
             var browserName = "Unknown";
