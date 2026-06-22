@@ -63,7 +63,7 @@
             color: #fff !important;
             border-radius: 50% !important;
             
-            /* Kích thước vòng tròn đỏ */
+            /* Kích thước vòng tròn đỏ sậm */
             width: 54px !important;
             height: 54px !important;
             max-width: 54px !important;
@@ -87,14 +87,14 @@
             line-height: 1 !important;
         }
         
-        /* ĐÃ CHỈNH: Phóng to tam giác lên gần sát viền tròn (từ 16px lên 32px) */
+        /* ĐÃ ĐIỀU CHỈNH: Tam giác to tràn sát viền tròn giống ảnh image_64c9aa.png */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 40px !important;
-            height: 40px !important;
+            width: 42px !important;
+            height: 42px !important;
             fill: #ffffff !important;
-            /* Dịch chuyển nhẹ sang phải một chút để cân tâm quang học chuẩn nhất khi phóng to */
-            transform: translateX(3px) !important;
+            /* Cân chỉnh tọa độ quang học cho tam giác kích thước lớn */
+            transform: translateX(4px) !important;
             display: block !important;
             margin: 0 !important;
             padding: 0 !important;
@@ -179,7 +179,7 @@
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <span id="${textId}">
-                <svg viewBox="0 0 24 24">
+                <svg viewBox="2 2 20 20">
                     <path d="M8 5v14l11-7z"/>
                 </svg>
             </span>
@@ -341,7 +341,7 @@
                     btn.classList.remove('disabled-state');
                     btn.classList.remove('alert-state'); 
                     btn.style.cursor = 'pointer';
-                    btnText.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
+                    btnText.innerHTML = '<svg viewBox="2 2 20 20"><path d="M8 5v14l11-7z"/></svg>';
                     restoreInteractionListeners(BASE_COLOR);
                 }, 5000);
             } else {
