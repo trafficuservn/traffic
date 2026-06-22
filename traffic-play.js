@@ -11,7 +11,7 @@
     const SCROLL_ALERT_MESSAGE = 'Vui lòng thực hiện thao tác cuộn để tiếp tục đếm ngược thời gian.';
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn.';
-    const BASE_COLOR = '#cc0000'; // Đổi thành màu đỏ giống nút play
+    const BASE_COLOR = '#cc0000'; 
     const HOVER_COLOR = '#ba0000'; 
     const ACTIVE_COLOR = '#990000'; 
     const READY_COLOR = '#128BE0'; 
@@ -57,49 +57,61 @@
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
-            background: ${BASE_COLOR};
-            border: 3px solid rgba(255,255,255,0.2);
-            color: #fff;
-            border-radius: 50%;
-            width: 70px;
-            height: 70px;
-            margin: 5px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 0;
-            user-select: none;
-            transition: all 0.2s ease;
-            position: relative;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            box-sizing: border-box !important;
+            background: ${BASE_COLOR} !important;
+            border: 2px solid rgba(255,255,255,0.15) !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+            
+            width: 54px !important;
+            height: 54px !important;
+            max-width: 54px !important;
+            max-height: 54px !important;
+            flex-shrink: 0 !important;
+            
+            margin: 5px !important;
+            padding: 0 !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            z-index: 0 !important;
+            user-select: none !important;
+            transition: all 0.2s ease !important;
+            position: relative !important;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
+            font-weight: 700 !important;
+            font-size: 24px !important; 
+            line-height: 1 !important;
         }
-        /* Style cho hình tam giác nút Play */
+        /* Cấu trúc CSS tam giác chuẩn kích thước tầm 45px cân đối với vòng tròn 54px */
         .custom-button-${CONTAINER_ID} .play-icon {
-            width: 0;
-            height: 0;
-            border-style: solid;
-            border-width: 12px 0 12px 20px;
-            border-color: transparent transparent transparent #ffffff;
-            margin-left: 6px; /* Đẩy nhẹ sang phải để cân đối hình tròn */
-            display: inline-block;
+            box-sizing: border-box !important;
+            width: 0 !important;
+            height: 0 !important;
+            border-style: solid !important;
+            border-width: 13px 0 13px 22px !important; /* Tạo chiều cao tầm 26px và rộng 22px để lọt lòng 54px mượt mà */
+            border-color: transparent transparent transparent #ffffff !important;
+            margin-left: 5px !important; /* Đẩy nhẹ sang phải để trọng tâm tam giác nằm giữa hình tròn */
+            display: inline-block !important;
         }
-        /* Khi đang đếm ngược, chuyển thành hình chữ nhật dài ra để hiện text */
+        /* Khi đang đếm ngược hoặc hoàn thành, cho phép nút mở rộng kích thước tự động (width/max-width: auto) */
         .custom-button-${CONTAINER_ID}.counting-state {
-            border-radius: 7px;
-            width: auto;
-            height: auto;
-            padding: 8px 15px;
-            font-weight: 700;
-            font-size: 14px;
+            border-radius: 7px !important;
+            width: auto !important;
+            max-width: none !important;
+            height: auto !important;
+            max-height: none !important;
+            padding: 10px 18px !important;
+            font-size: 15px !important;
         }
         .custom-button-${CONTAINER_ID}.disabled-state {
-            cursor: not-allowed;
+            cursor: not-allowed !important;
         }
         .custom-button-${CONTAINER_ID} span {
-            color: #fff;
-            font-weight: 700;
+            color: #fff !important;
+            font-weight: 700 !important;
         }
         #copy-alert-${CONTAINER_ID} {
             position: fixed;
@@ -139,11 +151,11 @@
                 box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 0, 0, 0.9); 
             }
             100% { 
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 0, 1);
+                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 153, 1);
             }
         }
         .custom-button-${CONTAINER_ID}.paused-state {
-            background: ${BASE_COLOR};
+            background: ${BASE_COLOR} !important;
         }
     `;
     document.head.appendChild(style);
@@ -151,7 +163,6 @@
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; 
     
-    // Đổi cấu trúc HTML ban đầu thành nút Play hình tròn
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <span id="${textId}"><i class="play-icon"></i></span>
@@ -170,7 +181,7 @@
     }
     function updateCountdown() {
         if (seconds > 0) {
-            btn.classList.add('counting-state'); // Kích hoạt style nút dài để hiện chữ
+            btn.classList.add('counting-state'); 
             btnText.textContent = `Lấy mã sau ${seconds}s`;
             seconds--;
         } else {
@@ -183,7 +194,7 @@
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false; 
             incognitoChecked = false; 
-            btn.style.background = BASE_COLOR; 
+            btn.style.setProperty('background', BASE_COLOR, 'important');
             btn.classList.remove('disabled-state');
             btn.classList.remove('paused-state'); 
             btn.style.cursor = 'pointer';
@@ -211,7 +222,7 @@
         if (counting || seconds <= 0) return; 
         counting = true;
         incognitoChecked = true;
-        btn.style.background = BASE_COLOR;
+        btn.style.setProperty('background', BASE_COLOR, 'important');
         btn.classList.add('disabled-state');
         btn.style.cursor = 'not-allowed';
         removeInteractionListeners();
@@ -245,16 +256,16 @@
     }
     function interactionListeners(enable, baseColor = BASE_COLOR) {
         function handleMouseEnter() {
-            if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.setProperty('background', HOVER_COLOR, 'important');
         }
         function handleMouseLeave() {
-            if (!counting && !isPausedByScroll) btn.style.background = baseColor;
+            if (!counting && !isPausedByScroll) btn.style.setProperty('background', baseColor, 'important');
         }
         function handleMouseDown() {
-            if (!counting && !isPausedByScroll) btn.style.background = ACTIVE_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.setProperty('background', ACTIVE_COLOR, 'important');
         }
         function handleMouseUp() {
-            if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.setProperty('background', HOVER_COLOR, 'important');
         }
         if(enable) {
             btn.addEventListener('mouseenter', handleMouseEnter);
@@ -290,7 +301,7 @@
             hideScrollAlert(); 
         } else {
             if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
-                btn.style.background = BASE_COLOR;
+                btn.style.setProperty('background', BASE_COLOR, 'important');
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
@@ -298,7 +309,7 @@
                  setScrollStopTimeout(); 
             }
             if (seconds === 0 && !counting) {
-                 btn.style.background = BASE_COLOR; 
+                 btn.style.setProperty('background', BASE_COLOR, 'important'); 
                  restoreInteractionListeners(BASE_COLOR); 
             }
         }
@@ -320,17 +331,17 @@
                 counting = false;
                 isPausedByScroll = false; 
                 incognitoChecked = false; 
-                btn.style.background = BASE_COLOR;
+                btn.style.setProperty('background', BASE_COLOR, 'important');
                 btn.classList.add('disabled-state');
                 btn.classList.remove('paused-state');
                 btn.style.cursor = 'default';
                 
-                btn.classList.add('counting-state'); // Cho nút dài ra để hiện thông báo ẩn danh
+                btn.classList.add('counting-state'); 
                 btnText.textContent = PRIVATE_MODE_MESSAGE; 
                 setTimeout(() => {
-                    btn.style.background = BASE_COLOR;
+                    btn.style.setProperty('background', BASE_COLOR, 'important');
                     btn.classList.remove('disabled-state');
-                    btn.classList.remove('counting-state'); // Thu nhỏ lại thành nút Play tròn
+                    btn.classList.remove('counting-state'); 
                     btn.style.cursor = 'pointer';
                     btnText.innerHTML = '<i class="play-icon"></i>';
                     restoreInteractionListeners(BASE_COLOR);
@@ -509,7 +520,6 @@
 					msiePrivateTest();
 				}
 				else {
-					// Fallback
 					__callback(false);
 				}
 			}
