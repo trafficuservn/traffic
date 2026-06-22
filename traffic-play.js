@@ -88,13 +88,13 @@
         /* Cấu trúc CSS tam giác chuẩn kích thước tầm 45px cân đối với vòng tròn 54px */
         .custom-button-${CONTAINER_ID} .play-icon {
             box-sizing: border-box !important;
-            width: 0 !important;
-            height: 0 !important;
-            border-style: solid !important;
-            border-width: 13px 0 13px 22px !important; /* Tạo chiều cao tầm 26px và rộng 22px để lọt lòng 54px mượt mà */
-            border-color: transparent transparent transparent #ffffff !important;
-            margin-left: 5px !important; /* Đẩy nhẹ sang phải để trọng tâm tam giác nằm giữa hình tròn */
-            display: inline-block !important;
+            width: 50px !important;
+            height: 50px !important;
+            fill: #ffffff !important;
+            transform: translateX(0px) !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         /* Khi đang đếm ngược hoặc hoàn thành, cho phép nút mở rộng kích thước tự động (width/max-width: auto) */
         .custom-button-${CONTAINER_ID}.counting-state {
