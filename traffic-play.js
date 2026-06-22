@@ -196,7 +196,7 @@
             
             btn.classList.add('finished-state'); 
             btn.style.cursor = 'pointer';
-            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
+            btnText.innerHTML = `${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
             restoreInteractionListeners(BASE_COLOR); 
