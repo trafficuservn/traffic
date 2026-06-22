@@ -63,7 +63,7 @@
             color: #fff !important;
             border-radius: 50% !important;
             
-            /* Khóa cứng vòng tròn tuyệt đối, chặn css ngoài đè vào */
+            /* Kích thước vòng tròn đỏ */
             width: 54px !important;
             height: 54px !important;
             max-width: 54px !important;
@@ -86,18 +86,20 @@
             font-size: 16px !important;
             line-height: 1 !important;
         }
-        /* Icon SVG tam giác cân */
+        
+        /* ĐÃ CHỈNH: Phóng to tam giác lên gần sát viền tròn (từ 16px lên 32px) */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 35px !important;
-            height: 35px !important;
+            width: 32px !important;
+            height: 32px !important;
             fill: #ffffff !important;
-            transform: translateX(1.5px) !important;
+            /* Dịch chuyển nhẹ sang phải một chút để cân tâm quang học chuẩn nhất khi phóng to */
+            transform: translateX(3px) !important;
             display: block !important;
             margin: 0 !important;
             padding: 0 !important;
         }
-        /* Phá bỏ vòng tròn - chuyển thành dạng dài khi hiển thị mã khuyến mại xong xuôi */
+        
         .custom-button-${CONTAINER_ID}.finished-state {
             border-radius: 6px !important;
             width: auto !important;
@@ -107,7 +109,6 @@
             padding: 8px 16px !important;
             font-size: 14px !important;
         }
-        /* Dạng dài cho thông báo ẩn danh */
         .custom-button-${CONTAINER_ID}.alert-state {
             border-radius: 6px !important;
             width: auto !important;
@@ -409,7 +410,7 @@
 			}
 			function oldChromePrivateTest() { var fs = window.webkitRequestFileSystem; var success = function () { __callback(false); }; var error = function () { __callback(true); }; fs(0, 1, success, error); }
 			function chromePrivateTest() { if (self.Promise !== undefined && self.Promise.allSettled !== undefined) storageQuotaChromePrivateTest(); else oldChromePrivateTest(); }
-			function firefoxPrivateTest() { __callback(navigator serviceWorker === undefined); }
+			function firefoxPrivateTest() { __callback(navigator.serviceWorker === undefined); }
 			function msiePrivateTest() { __callback(window.indexedDB === undefined); }
 			function main() {
 				if (isSafari()) { browserName = 'Safari'; safariPrivateTest(); }
