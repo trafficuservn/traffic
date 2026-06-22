@@ -80,7 +80,7 @@
             width: 0;
             height: 0;
             border-style: solid;
-            border-width: 12px 0 12px 20px;
+            border-width: 15px 0 15px 25px;
             border-color: transparent transparent transparent #ffffff;
             margin-left: 6px; /* Đẩy nhẹ sang phải để cân đối hình tròn */
             display: inline-block;
