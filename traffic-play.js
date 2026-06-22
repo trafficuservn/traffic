@@ -57,89 +57,109 @@
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
-            background: ${BASE_COLOR};
-            border: 2px solid rgba(255,255,255,0.15);
-            color: #fff;
-            border-radius: 50%;
-            width: 54px;
-            height: 54px;
-            margin: 5px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 0;
-            user-select: none;
-            transition: all 0.2s ease;
-            position: relative;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.25);
-            font-weight: 700;
-            font-size: 16px;
+            box-sizing: border-box !important;
+            background: ${BASE_COLOR} !important;
+            border: 2px solid rgba(255,255,255,0.15) !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+            
+            /* Khóa cứng vòng tròn tuyệt đối, chặn css ngoài đè vào */
+            width: 54px !important;
+            height: 54px !important;
+            max-width: 54px !important;
+            max-height: 54px !important;
+            flex-shrink: 0 !important;
+            
+            margin: 5px !important;
+            padding: 0 !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            z-index: 0 !important;
+            user-select: none !important;
+            transition: all 0.2s ease !important;
+            position: relative !important;
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            line-height: 1 !important;
         }
-        /* Icon SVG tam giác nhỏ cân chính giữa */
+        /* Icon SVG tam giác cân */
         .custom-button-${CONTAINER_ID} svg {
-            width: 16px;
-            height: 16px;
-            fill: #ffffff;
-            transform: translateX(1.5px); /* Trọng tâm tam giác nghiêng phải 1.5px để cân mắt */
-            display: block;
+            box-sizing: border-box !important;
+            width: 16px !important;
+            height: 16px !important;
+            fill: #ffffff !important;
+            transform: translateX(1.5px) !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
-        /* Chuyển thành dạng dài chỉ khi kết thúc đếm ngược hiển thị mã */
+        /* Phá bỏ vòng tròn - chuyển thành dạng dài khi hiển thị mã khuyến mại xong xuôi */
         .custom-button-${CONTAINER_ID}.finished-state {
-            border-radius: 6px;
-            width: auto;
-            height: auto;
-            padding: 8px 16px;
-            font-size: 14px;
+            border-radius: 6px !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
         }
-        /* Cấu hình hiển thị thông báo lỗi ẩn danh */
+        /* Dạng dài cho thông báo ẩn danh */
         .custom-button-${CONTAINER_ID}.alert-state {
-            border-radius: 6px;
-            width: auto;
-            height: auto;
-            padding: 8px 16px;
-            font-size: 14px;
+            border-radius: 6px !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            padding: 8px 16px !important;
+            font-size: 14px !important;
         }
         .custom-button-${CONTAINER_ID}.disabled-state {
-            cursor: not-allowed;
+            cursor: not-allowed !important;
         }
         .custom-button-${CONTAINER_ID} span {
-            color: #fff;
-            font-weight: 700;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            box-sizing: border-box !important;
+            color: #fff !important;
+            font-weight: 700 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
         #copy-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${BASE_COLOR};
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: none;
-            z-index: 9999;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: fixed !important;
+            top: 20px !important;
+            right: 20px !important;
+            background: ${BASE_COLOR} !important;
+            color: white !important;
+            padding: 8px 15px !important;
+            border-radius: 5px !important;
+            display: none !important;
+            z-index: 9999 !important;
+            font-weight: bold !important;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
         }
         #scroll-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 15px 25px;
-            background: rgba(255, 0, 0, 0.95);
-            color: yellow;
-            font-weight: 700;
-            font-size: 16px;
-            border-radius: 10px;
-            text-align: center;
-            line-height: 1.5;
-            z-index: 9998;
-            display: none;
-            animation: border-pulse 1s infinite alternate; 
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            padding: 15px 25px !important;
+            background: rgba(255, 0, 0, 0.95) !important;
+            color: yellow !important;
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            border-radius: 10px !important;
+            text-align: center !important;
+            line-height: 1.5 !important;
+            z-index: 9998 !important;
+            display: none !important;
+            animation: border-pulse 1s infinite alternate !important; 
         }
         @keyframes border-pulse {
             0% { box-shadow: 0 0 0px rgba(255, 255, 255, 0), 0 0 5px rgba(255, 0, 0, 0.8); }
@@ -147,7 +167,7 @@
             100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 0, 1); }
         }
         .custom-button-${CONTAINER_ID}.paused-state {
-            background: ${BASE_COLOR};
+            background: ${BASE_COLOR} !important;
         }
     `;
     document.head.appendChild(style);
@@ -177,7 +197,6 @@
     }
     function updateCountdown() {
         if (seconds > 0) {
-            // Nút giữ nguyên hình tròn, chỉ cập nhật số giây thuần túy vào bên trong
             btnText.textContent = seconds;
             seconds--;
         } else {
@@ -194,7 +213,6 @@
             btn.classList.remove('disabled-state');
             btn.classList.remove('paused-state'); 
             
-            // Đổi nút sang dạng dài khi hiển thị kết quả cuối cùng chứa mã
             btn.classList.add('finished-state'); 
             btn.style.cursor = 'pointer';
             btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
@@ -391,7 +409,7 @@
 			}
 			function oldChromePrivateTest() { var fs = window.webkitRequestFileSystem; var success = function () { __callback(false); }; var error = function () { __callback(true); }; fs(0, 1, success, error); }
 			function chromePrivateTest() { if (self.Promise !== undefined && self.Promise.allSettled !== undefined) storageQuotaChromePrivateTest(); else oldChromePrivateTest(); }
-			function firefoxPrivateTest() { __callback(navigator.serviceWorker === undefined); }
+			function firefoxPrivateTest() { __callback(navigator serviceWorker === undefined); }
 			function msiePrivateTest() { __callback(window.indexedDB === undefined); }
 			function main() {
 				if (isSafari()) { browserName = 'Safari'; safariPrivateTest(); }
