@@ -63,7 +63,6 @@
             color: #fff !important;
             border-radius: 50% !important;
             
-            /* Kích thước vòng tròn đỏ sậm */
             width: 50px !important;
             height: 50px !important;
             max-width: 50px !important;
@@ -83,17 +82,15 @@
             position: relative !important;
             box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
             font-weight: 700 !important;
-            font-size: 24px !important;
+            font-size: 16px !important;
             line-height: 1 !important;
         }
         
-        /* ĐÃ ĐIỀU CHỈNH: Tam giác to tràn sát viền tròn giống ảnh image_64c9aa.png */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
             width: 45px !important;
             height: 45px !important;
             fill: #ffffff !important;
-            /* Cân chỉnh tọa độ quang học cho tam giác kích thước lớn */
             transform: translateX(0px) !important;
             display: block !important;
             margin: 0 !important;
@@ -158,7 +155,7 @@
             border-radius: 10px !important;
             text-align: center !important;
             line-height: 1.5 !important;
-            z-index: 9998 !important;
+            z-index: 99990 !important; /* Đẩy z-index lên rất cao để không bị theme đè khuất */
             display: none !important;
             animation: border-pulse 1s infinite alternate !important; 
         }
@@ -251,13 +248,15 @@
         setScrollStopTimeout();
     }
     function showScrollAlert() {
-        if (counting && seconds > 0 && !isPausedByScroll) {
+        if (counting && seconds > 0) { // ĐÃ VÁ LỖI: Bỏ qua check trạng thái pause để ép thông báo hiển thị đè lên luôn
             scrollAlertElement.style.display = 'block';
             pauseCountdown(); 
         }
     }
     function hideScrollAlert() {
-        scrollAlertElement.style.display = 'none';
+        if (scrollAlertElement) {
+            scrollAlertElement.style.display = 'none';
+        }
         resumeCountdown(); 
     }
     function setScrollStopTimeout() {
