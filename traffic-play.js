@@ -64,10 +64,10 @@
             border-radius: 50% !important;
             
             /* Kích thước vòng tròn đỏ sậm */
-            width: 54px !important;
-            height: 54px !important;
-            max-width: 54px !important;
-            max-height: 54px !important;
+            width: 50px !important;
+            height: 50px !important;
+            max-width: 50px !important;
+            max-height: 50px !important;
             flex-shrink: 0 !important;
             
             margin: 5px !important;
@@ -90,8 +90,8 @@
         /* ĐÃ ĐIỀU CHỈNH: Tam giác to tràn sát viền tròn giống ảnh image_64c9aa.png */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 50px !important;
-            height: 50px !important;
+            width: 45px !important;
+            height: 45px !important;
             fill: #ffffff !important;
             /* Cân chỉnh tọa độ quang học cho tam giác kích thước lớn */
             transform: translateX(0px) !important;
