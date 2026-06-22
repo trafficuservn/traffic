@@ -89,8 +89,8 @@
         /* Icon SVG tam giác cân */
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 16px !important;
-            height: 16px !important;
+            width: 35px !important;
+            height: 35px !important;
             fill: #ffffff !important;
             transform: translateX(1.5px) !important;
             display: block !important;
