@@ -13,7 +13,6 @@
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn!';
     const BASE_COLOR = '#EE2F2E'; 
-    
     function getRandomPassCode() {
         const randomIndex = Math.floor(Math.random() * PASS_CODE_LIST.length);
         return PASS_CODE_LIST[randomIndex];
@@ -56,7 +55,6 @@
         return false;
     }
     if (!checkGoogleReferrer()) return;
-
     const container = document.getElementById(CONTAINER_ID);
     if (!container) {
         console.error(`Không tìm thấy container có ID: ${CONTAINER_ID}`);
@@ -149,7 +147,6 @@
             font-weight: bold !important;
             box-shadow: 0 4px 8px rgba(0,0,0,0.2) !important;
         }
-        /* CSS tích hợp cho popup thông báo cuộn trang */
         #scroll-alert-${CONTAINER_ID} {
             position: fixed !important;
             top: 50% !important;
@@ -198,7 +195,6 @@
     function copyCodeHandler() {
         copyToClipboard(currentPassCode, alertElement); 
     }
-
     function updateCountdown() {
         if (seconds > 0) {
             btnText.textContent = seconds;
@@ -208,53 +204,42 @@
             interval = null;
             counting = false;
             incognitoChecked = false; 
-            
-            // Xóa bỏ lắng nghe cuộn khi hoàn thành
             window.removeEventListener('scroll', handleScroll);
             if (scrollTimeout) clearTimeout(scrollTimeout);
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false;
-
             btn.style.background = BASE_COLOR; 
             btn.classList.remove('disabled-state');
             btn.classList.remove('alert-state'); 
-            
             btn.classList.add('finished-state'); 
             btn.style.cursor = 'pointer';
-            // Sửa đổi hiển thị đúng mã currentPassCode ngẫu nhiên được chọn
-            // Sửa đổi hiển thị đúng mã currentPassCode ngẫu nhiên và dùng icon SVG copy màu trắng
-btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 18px !important; width: 18px !important; margin: -4px 0 0 6px !important; vertical-align: middle; display: inline-block; fill: #ffffff;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+            btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 18px !important; width: 18px !important; margin: -4px 0 0 6px !important; vertical-align: middle; display: inline-block; fill: #ffffff;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
         }
     }
-
     function pauseCountdown() {
         if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return;
         clearInterval(interval);
         interval = null;
         isPausedByScroll = true;
     }
-
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
         btnText.textContent = seconds; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
     }
-
     function showScrollAlert() {
         if (counting && seconds > 0 && !isPausedByScroll) {
             scrollAlertElement.style.display = 'block';
             pauseCountdown(); 
         }
     }
-
     function hideScrollAlert() {
         if (scrollAlertElement) scrollAlertElement.style.display = 'none';
         resumeCountdown(); 
     }
-
     function setScrollStopTimeout() {
         if (scrollTimeout) {
             clearTimeout(scrollTimeout);
@@ -262,19 +247,14 @@ btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 
         }
         scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
     }
-
     function handleScroll() {
         if (!counting || seconds <= 0) return;
         hideScrollAlert();
         setScrollStopTimeout();
     }
-
     function startCountdown() {
         if (counting || seconds <= 0) return; 
-        
-        // CHỖ QUAN TRỌNG: Kích hoạt lấy ngẫu nhiên 1 pass khi bắt đầu bấm nút
         currentPassCode = getRandomPassCode();
-        
         counting = true;
         incognitoChecked = true;
         btn.style.background = BASE_COLOR;
@@ -283,12 +263,9 @@ btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 
         btn.removeEventListener('click', checkIncognitoAndStart); 
         updateCountdown();
         interval = setInterval(updateCountdown, 1000);
-        
-        // Kích hoạt tính năng theo dõi hành vi cuộn chuột
         window.addEventListener('scroll', handleScroll);
         setScrollStopTimeout();
     }
-
     function handleVisibilityChange() {
         if (document.hidden) {
             if (interval) { clearInterval(interval); interval = null; }
@@ -305,9 +282,7 @@ btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 
             }
         }
     }
-
     document.addEventListener('visibilitychange', handleVisibilityChange);
-
     function checkIncognitoAndStart() {
         if (incognitoChecked && counting) return;
         detectIncognito().then((result) => {
@@ -324,9 +299,7 @@ btnText.innerHTML = `${currentPassCode} <svg viewBox="0 0 24 24" style="height: 
             }
         });
     }
-
     btn.addEventListener('click', checkIncognitoAndStart);
-
     const detectIncognito = function () {
         return new Promise(function (resolve) {
             var browserName = "Unknown";
