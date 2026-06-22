@@ -85,19 +85,21 @@
             font-size: 24px !important; 
             line-height: 1 !important;
         }
-        /* Cấu trúc CSS tam giác chuẩn kích thước tầm 45px cân đối với vòng tròn 54px */
-        .custom-button-${CONTAINER_ID} .play-icon {
+        
+        /* CSS cho thẻ SVG lọt lòng vòng tròn 54px */
+        .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 50px !important;
-            height: 50px !important;
+            width: 32px !important;
+            height: 32px !important;
             fill: #ffffff !important;
-            transform: translateX(0px) !important;
+            transform: translateX(2px) !important; /* Đẩy nhẹ sang phải để tam giác cân đối */
             display: block !important;
             margin: 0 !important;
             padding: 0 !important;
         }
-        /* Khi đang đếm ngược hoặc hoàn thành, cho phép nút mở rộng kích thước tự động (width/max-width: auto) */
-        .custom-button-${CONTAINER_ID}.counting-state {
+        
+        /* Khi HOÀN THÀNH hoặc BÁO ẨN DANH, mới cho phép nút dài ra để hiện chữ và mã KM */
+        .custom-button-${CONTAINER_ID}.expanded-state {
             border-radius: 7px !important;
             width: auto !important;
             max-width: none !important;
@@ -163,9 +165,12 @@
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; 
     
+    // Khởi tạo ban đầu chứa mã SVG nút Play (bạn có thể thay path d="..." bằng mã SVG chuẩn của bạn)
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
-            <span id="${textId}"><i class="play-icon"></i></span>
+            <span id="${textId}">
+                <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            </span>
         </span>
     `;
     const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
@@ -181,8 +186,8 @@
     }
     function updateCountdown() {
         if (seconds > 0) {
-            btn.classList.add('counting-state'); 
-            btnText.textContent = `Lấy mã sau ${seconds}s`;
+            // Giữ nguyên nút tròn 54px, chỉ thay đổi số giây (font 24px từ CSS)
+            btnText.textContent = seconds;
             seconds--;
         } else {
             clearInterval(interval);
@@ -198,6 +203,9 @@
             btn.classList.remove('disabled-state');
             btn.classList.remove('paused-state'); 
             btn.style.cursor = 'pointer';
+            
+            // Khi hiện mã khuyến mãi thì cho nút mở rộng ra thành hình chữ nhật dài
+            btn.classList.add('expanded-state');
             btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
@@ -213,7 +221,7 @@
     }
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btnText.textContent = `Lấy mã sau ${seconds}s`; 
+        btnText.textContent = seconds; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
         btn.classList.remove('paused-state');
@@ -336,14 +344,15 @@
                 btn.classList.remove('paused-state');
                 btn.style.cursor = 'default';
                 
-                btn.classList.add('counting-state'); 
+                // Khi báo ẩn danh thì cho nút mở rộng ra để chứa dòng thông báo dài
+                btn.classList.add('expanded-state'); 
                 btnText.textContent = PRIVATE_MODE_MESSAGE; 
                 setTimeout(() => {
                     btn.style.setProperty('background', BASE_COLOR, 'important');
                     btn.classList.remove('disabled-state');
-                    btn.classList.remove('counting-state'); 
+                    btn.classList.remove('expanded-state'); 
                     btn.style.cursor = 'pointer';
-                    btnText.innerHTML = '<i class="play-icon"></i>';
+                    btnText.innerHTML = '<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>';
                     restoreInteractionListeners(BASE_COLOR);
                 }, 5000);
             } else {
