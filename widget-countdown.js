@@ -14,7 +14,7 @@
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(() => {
-                alertElement.style.display = 'inline-block';
+                alertElement.style.display = 'block';
                 setTimeout(() => { alertElement.style.display = 'none'; }, 1500);
             });
         } else {
@@ -26,7 +26,7 @@
             textArea.select();
             try {
                 document.execCommand('copy');
-                alertElement.style.display = 'inline-block';
+                alertElement.style.display = 'block';
                 setTimeout(() => { alertElement.style.display = 'none'; }, 1500);
             } catch (err) {
                 alert("Không thể sao chép. Trình duyệt không hỗ trợ.");
@@ -56,12 +56,6 @@
 
     const style = document.createElement('style');
     style.textContent = `
-        /* Đảm bảo container hiển thị linh hoạt để đặt thông báo cạnh bên */
-        #${CONTAINER_ID} {
-            display: inline-flex;
-            align-items: center;
-            position: relative;
-        }
         .custom-button-${CONTAINER_ID} {
             background: ${BASE_COLOR};
             border: 2px solid #fff;
@@ -95,38 +89,38 @@
             color: #fff;
             font-weight: 700;
         }
-        /* Thông báo hiển thị ngay cạnh nút */
         #copy-alert-${CONTAINER_ID} {
-            display: none;
+            position: fixed;
+            top: 20px;
+            right: 20px;
             background: ${BASE_COLOR};
             color: white;
-            padding: 5px 10px;
+            padding: 8px 15px;
             border-radius: 5px;
-            margin-left: 8px;
+            display: none;
             z-index: 9999;
-            font-size: 13px;
             font-weight: bold;
-            white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
         }
     `;
     document.head.appendChild(style);
 
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
-    const alertId = `copy-alert-${CONTAINER_ID}`;
     
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-nut-64.png" alt="icon">
             <span id="${textId}">LẤY MÃ</span>
         </span>
-        <div id="${alertId}">Đã sao chép mã!</div>
     `;
+
+    const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
+    document.body.insertAdjacentHTML('beforeend', alertHtml);
 
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
-    const alertElement = document.getElementById(alertId);
+    const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
 
     function copyCodeHandler() {
         copyToClipboard(PASS_CODE, alertElement);
