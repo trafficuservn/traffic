@@ -53,7 +53,7 @@
         .custom-button-${CONTAINER_ID} {
             box-sizing: border-box !important;
             background: ${BASE_COLOR} !important;
-            border: 2px solid rgba(255,255,255,0.15) !important;
+            border: 2px solid rgb(177, 0, 14) !important;
             color: #fff !important;
             border-radius: 50% !important;
             width: 50px !important;
