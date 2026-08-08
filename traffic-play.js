@@ -111,7 +111,7 @@
             max-width: none !important;
             max-height: none !important;
             padding: 10px 18px !important;
-            font-size: 20px !important;
+            font-size: 16px !important;
             background: rgba(238, 47, 46, 0.95) !important;
             border: 2px solid #ffffff !important; 
             color: #ffffff !important;        
