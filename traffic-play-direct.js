@@ -87,16 +87,16 @@
             padding: 0 !important;
         }
         .custom-button-${CONTAINER_ID}.alert-state {
-            border-radius: 6px !important;
+            border-radius: 4px !important;
             width: auto !important;
             height: auto !important;
             max-width: none !important;
             max-height: none !important;
-            padding: 10px 18px !important;
-            font-size: 20px !important;
+            padding: 5px 10px !important;
+            font-size: 13px !important;
             background: rgba(238, 47, 46, 0.95) !important;
-            border: 2px solid #ffffff !important; 
-            color: #ffffff !important;        
+            border: 1px solid #ffffff !important; 
+            color: #ffffff !important;         
         }
         .custom-button-${CONTAINER_ID}.finished-state {
             border-radius: 6px !important;
