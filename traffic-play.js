@@ -70,7 +70,7 @@
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
             box-sizing: border-box !important;
-            background: linear-gradient(180deg, #F14E4D 0%, #B1000E 100%) !important;
+            background: linear-gradient(180deg, #F74645 0%, #E51616 100%) !important;
             border: 2px solid rgb(177, 0, 14) !important;
             color: #fff !important;
             border-radius: 50% !important;
