@@ -94,7 +94,7 @@
             box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
             font-weight: 700 !important;
             font-size: 23px !important;
-            line-height: 1 !important;
+            line-height: 50px !important;
         }
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
