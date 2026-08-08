@@ -97,8 +97,8 @@
         }
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 32px !important; /* Điều chỉnh lại tỉ lệ icon play cho vừa nút tròn */
-            height: 32px !important;
+            width: 40px !important; /* Điều chỉnh lại tỉ lệ icon play cho vừa nút tròn */
+            height: 40px !important;
             fill: #ffffff !important;
             display: block !important;
             margin: 0 !important;
