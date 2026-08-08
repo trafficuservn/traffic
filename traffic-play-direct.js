@@ -79,8 +79,8 @@
         }
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
-            width: 32px !important;
-            height: 32px !important;
+            width: 54px !important;
+            height: 54px !important;
             fill: #ffffff !important;
             display: block !important;
             margin: 0 !important;
