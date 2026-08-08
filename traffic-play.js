@@ -74,10 +74,10 @@
             border: 2px solid rgba(255,255,255,0.15) !important;
             color: #fff !important;
             border-radius: 50% !important;
-            width: 54px !important;
-            height: 54px !important;
-            max-width: 54px !important;
-            max-height: 54px !important;
+            width: 50px !important;
+            height: 50px !important;
+            max-width: 50px !important;
+            max-height: 50px !important;
             flex-shrink: 0 !important;
             margin: 5px !important;
             padding: 0 !important;
