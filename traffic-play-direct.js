@@ -51,32 +51,33 @@
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
-            box-sizing: border-box !important;
-            background: ${BASE_COLOR} !important;
-            border: 2px solid rgb(177, 0, 14) !important;
-            color: #fff !important;
-            border-radius: 50% !important;
-            width: 50px !important;
-            height: 50px !important;
-            max-width: 50px !important;
-            max-height: 50px !important;
-            flex-shrink: 0 !important;
-            margin: 5px !important;
-            padding: 0 !important;
-            cursor: pointer !important;
-            display: inline-flex !important;
-            align-items: center !important;
-            justify-content: center !important;
-            text-align: center !important;
-            z-index: 999 !important;
-            user-select: none !important;
-            transition: all 0.2s ease !important;
-            position: relative !important; 
-            box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
-            font-weight: 700 !important;
-            font-size: 20px !important;
-            line-height: 1 !important;
-        }
+        box-sizing: border-box !important;
+        background: linear-gradient(180deg, #F94D4C 0%, #E00706 100%) !important;
+        border: 2px solid rgb(177, 0, 14) !important;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+        color: #fff !important;
+        border-radius: 50% !important;
+        width: 50px !important;
+        height: 50px !important;
+        max-width: 50px !important;
+        max-height: 50px !important;
+        flex-shrink: 0 !important;
+        margin: 5px !important;
+        padding: 0 !important;
+        cursor: pointer !important;
+        display: inline-flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        text-align: center !important;
+        z-index: 999 !important;
+        user-select: none !important;
+        transition: all 0.2s ease !important;
+        position: relative !important; 
+        box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
+        font-weight: 700 !important;
+        font-size: 23px !important;
+        line-height: 50px !important;
+    }
         .custom-button-${CONTAINER_ID} svg {
             box-sizing: border-box !important;
             width: 54px !important;
