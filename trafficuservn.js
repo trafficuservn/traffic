@@ -87,7 +87,7 @@
             position: absolute;
             top: 0;
             left: -150%;
-            width: 100%;
+            width: 50%;
             height: 100%;
             background: linear-gradient(
                 90deg,
@@ -95,7 +95,6 @@
                 rgba(255, 255, 255, 0.35),
                 transparent
             );
-            transform: skewX(-20deg);
             animation: shimmer-${CONTAINER_ID} 3.5s infinite linear;
         }
 
