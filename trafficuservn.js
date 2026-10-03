@@ -64,7 +64,7 @@
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
             background: linear-gradient(135deg, #ff2a2a 0%, #d60000 100%) !important;
-            border: 1.5px solid rgba(255, 255, 255, 0.8);
+            border: 2px solid #ffffff !important; /* Viền trắng phẳng, sắc nét, không loang lổ */
             color: #fff;
             font-weight: 700;
             font-size: 14px;
@@ -81,23 +81,21 @@
             text-align: center;
             z-index: 0;
             user-select: none;
-            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            transition: transform 0.15s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ gọn gàng bên dưới, không bị sáng loang màu */
         }
 
         .custom-button-${CONTAINER_ID}:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+            transform: translateY(-1px);
         }
 
         .custom-button-${CONTAINER_ID}:active {
             transform: translateY(1px);
-            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
         }
 
-        /* Hiệu ứng tia sáng quét qua nút cực kỳ mượt */
+        /* Hiệu ứng ánh sáng quét qua mượt mà */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
@@ -105,7 +103,7 @@
             left: -60%;
             width: 20%;
             height: 200%;
-            background: rgba(255, 255, 255, 0.5);
+            background: rgba(255, 255, 255, 0.3);
             transform: rotate(30deg);
             animation: elite-shine 4s infinite linear;
         }
@@ -116,21 +114,20 @@
             100% { left: 120%; }
         }
 
-        /* Hiệu ứng icon play kết hợp vòng sáng lan tỏa */
+        /* Hiệu ứng icon play nhịp đập tinh tế */
         .custom-button-${CONTAINER_ID} svg.play-icon {
             height: 22px;
             width: 22px;
             margin-right: 7px;
             display: inline-block;
             vertical-align: middle;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
             animation: icon-glow-pulse 2s infinite ease-in-out;
         }
 
         @keyframes icon-glow-pulse {
-            0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
-            50% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); }
-            100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
+            0% { transform: scale(1); opacity: 0.9; }
+            50% { transform: scale(1.08); opacity: 1; }
+            100% { transform: scale(1); opacity: 0.9; }
         }
 
         .custom-button-${CONTAINER_ID}.disabled-state {
@@ -158,7 +155,7 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* Thông báo cuộn trang nhỏ gọn, lịch sự, chuyên nghiệp */
+        /* Thông báo cuộn trang gọn gàng, tinh tế */
         #scroll-alert-${CONTAINER_ID} {
             position: fixed;
             top: 50%;
