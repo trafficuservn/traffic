@@ -113,8 +113,8 @@
         }
 
         .custom-button-${CONTAINER_ID} svg.play-icon {
-            height: 27px;
-            width: 27px;
+            height: 29px;
+            width: 29px;
             margin-right: 8px;
             display: inline-block;
             vertical-align: middle;
