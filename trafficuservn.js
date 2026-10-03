@@ -86,7 +86,7 @@
             content: '';
             position: absolute;
             top: 0;
-            left: -180%;
+            left: -100%;
             width: 100%;
             height: 100%;
             background: linear-gradient(
@@ -96,18 +96,18 @@
                 transparent
             );
             transform: skewX(-20deg);
-            animation: shimmer-${CONTAINER_ID} 4s infinite;
+            animation: shimmer-${CONTAINER_ID} 14s infinite;
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
             0% {
-                left: -180%;
+                left: -100%;
             }
             40% {
-                left: 180%;
+                left: 100%;
             }
             100% {
-                left: 180%;
+                left: 100%;
             }
         }
 
