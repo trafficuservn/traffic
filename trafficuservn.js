@@ -11,10 +11,7 @@
     const SCROLL_ALERT_MESSAGE = 'Vui lòng thực hiện thao tác cuộn để tiếp tục đếm ngược thời gian.';
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn.';
-    const BASE_COLOR = '#ed1c24'; 
-    const HOVER_COLOR = '#c40b11'; 
-    const ACTIVE_COLOR = '#9a070d'; 
-    const READY_COLOR = '#128BE0'; 
+
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
             navigator.clipboard.writeText(text).then(() => {
@@ -38,6 +35,7 @@
             document.body.removeChild(textArea);
         }
     }
+
     function checkGoogleReferrer() {
         const referrer = document.referrer;
         if (!referrer) return false;
@@ -48,168 +46,196 @@
         }
         return false;
     }
+
     if (!checkGoogleReferrer()) return;
+
     const container = document.getElementById(CONTAINER_ID);
     if (!container) {
         console.error(`Không tìm thấy container có ID: ${CONTAINER_ID}`);
         return;
     }
+
     const style = document.createElement('style');
     style.textContent = `
-       
         .custom-button-${CONTAINER_ID} {
-            background: linear-gradient(135deg, #ff3b43 0%, ${BASE_COLOR} 50%, #b50f15 100%);
-            border: 1px solid rgba(255, 255, 255, 0.4);
-            color: #fff;
-            font-weight: 700;
-            font-size: 14px;
-            border-radius: 8px;
-            padding: 8px 16px;
-            margin: 5px;
-            min-width: 140px;
-            line-height: 20px;
-            cursor: pointer;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            z-index: 10;
-            user-select: none;
-            transition: all 0.3s ease;
-            position: relative;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(237, 28, 36, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
+            box-sizing: border-box !important;
+            background: linear-gradient(180deg, #F94D4C 0%, #E00706 100%) !important;
+            border: 2px solid rgb(177, 0, 14) !important;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif !important;
+            color: #fff !important;
+            border-radius: 50% !important;
+            width: 50px !important;
+            height: 50px !important;
+            max-width: 50px !important;
+            max-height: 50px !important;
+            flex-shrink: 0 !important;
+            margin: 5px !important;
+            padding: 0 !important;
+            cursor: pointer !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            text-align: center !important;
+            z-index: 999 !important;
+            user-select: none !important;
+            transition: all 0.2s ease !important;
+            position: relative !important; 
+            box-shadow: 0 3px 8px rgba(0,0,0,0.25) !important;
+            font-weight: 700 !important;
+            font-size: 23px !important;
+            line-height: 50px !important;
+            overflow: hidden !important;
         }
 
-        /* Hiệu ứng ánh sáng chuyên nghiệp (Professional Shimmer Effect) */
+        /* Hiệu ứng lấp lánh chuyên nghiệp chạy qua nút */
         .custom-button-${CONTAINER_ID}::after {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -150%;
-            width: 50%;
-            height: 300%;
+            content: '' !important;
+            position: absolute !important;
+            top: -100% !important;
+            left: -150% !important;
+            width: 50% !important;
+            height: 300% !important;
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 255, 255, 0.05),
-                rgba(255, 255, 255, 0.35),
-                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.1),
+                rgba(255, 255, 255, 0.45),
+                rgba(255, 255, 255, 0.1),
                 transparent
-            );
-            transform: rotate(30deg);
-            animation: professional-shimmer 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
-            pointer-events: none;
+            ) !important;
+            transform: rotate(30deg) !important;
+            animation: shimmer-pro-${CONTAINER_ID} 3s cubic-bezier(0.4, 0, 0.2, 1) infinite !important;
+            pointer-events: none !important;
         }
 
-        @keyframes professional-shimmer {
-            0% {
-                left: -150%;
-            }
-            30% {
-                left: 150%;
-            }
-            100% {
-                left: 150%;
-            }
+        @keyframes shimmer-pro-${CONTAINER_ID} {
+            0% { left: -150%; }
+            30% { left: 150%; }
+            100% { left: 150%; }
         }
 
-        .custom-button-${CONTAINER_ID}:hover {
-            box-shadow: 0 6px 20px rgba(237, 28, 36, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
-            transform: translateY(-1px);
+        .custom-button-${CONTAINER_ID} svg {
+            box-sizing: border-box !important;
+            width: 54px !important;
+            height: 54px !important;
+            fill: #ffffff !important;
+            display: block !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
-
+        .custom-button-${CONTAINER_ID}.alert-state {
+            border-radius: 6px !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            padding: 8px 16px !important;
+            font-size: 20px !important;
+        }
+        .custom-button-${CONTAINER_ID}.finished-state {
+            border-radius: 6px !important;
+            width: auto !important;
+            height: auto !important;
+            max-width: none !important;
+            max-height: none !important;
+            padding: 8px 16px !important;
+            font-size: 20px !important;
+        }
         .custom-button-${CONTAINER_ID}.disabled-state {
-            cursor: not-allowed;
-            transform: none !important;
-        }
-        .custom-button-${CONTAINER_ID} img {
-            height: 22px;
-            margin-right: 8px;
-            display: inline-block;
-            width: auto;
-            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
+            cursor: not-allowed !important;
         }
         .custom-button-${CONTAINER_ID} span {
-            color: #fff;
-            font-weight: 700;
-            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
+            box-sizing: border-box !important;
+            color: inherit !important;
+            font-weight: 700 !important;
+            display: inline-flex !important;
+            align-items: center !important;
+            justify-content: center !important;
+            line-height: 1 !important;
+            margin: 0 !important;
+            padding: 0 !important;
         }
-        /* Styles cho thông báo copy */
         #copy-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: ${BASE_COLOR};
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            display: none;
-            z-index: 9999;
-            font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            position: absolute !important;
+            bottom: 130% !important;
+            left: 50% !important;
+            transform: translateX(-50%) !important;
+            background: #4CAF50 !important; 
+            color: white !important;
+            padding: 6px 14px !important;
+            border-radius: 5px !important;
+            display: none !important;
+            z-index: 99999 !important;
+            font-weight: bold !important;
+            font-size: 14px !important;
+            white-space: nowrap !important;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3) !important;
+        }
+        #copy-alert-${CONTAINER_ID}::after {
+            content: "" !important;
+            position: absolute !important;
+            top: 100% !important;
+            left: 50% !important;
+            margin-left: -6px !important;
+            border-width: 6px !important;
+            border-style: solid !important;
+            border-color: #4CAF50 transparent transparent transparent !important;
         }
         #scroll-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 15px 25px;
-            background: rgba(255, 0, 0, 0.95); 
-            color: yellow;
-            font-weight: 700;
-            font-size: 16px;
-            border-radius: 10px;
-            text-align: center;
-            line-height: 1.5;
-            z-index: 9998;
+            position: fixed !important;
+            top: 50% !important;
+            left: 50% !important;
+            transform: translate(-50%, -50%) !important;
+            padding: 15px 25px !important;
+            background: rgba(238, 47, 46, 0.98) !important;
+            color: #ffffff !important; 
+            font-weight: 700 !important;
+            font-size: 16px !important;
+            border-radius: 10px !important;
+            text-align: center !important;
+            line-height: 1.5 !important;
+            z-index: 99999 !important;
             display: none;
-    
-            animation: border-pulse 1s infinite alternate; 
-        }  
-        @keyframes border-pulse {
-            0% { 
-                box-shadow: 0 0 0px rgba(255, 255, 255, 0), 0 0 5px rgba(255, 0, 0, 0.8);
-            }
-            50% { 
-                box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 0, 0, 0.9); 
-            }
-            100% { 
-                box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 0, 1);
-            }
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.5) !important;
+            animation: border-pulse-${CONTAINER_ID} 1s infinite alternate !important; 
         }
-        
-        .custom-button-${CONTAINER_ID}.paused-state {
-            background: linear-gradient(135deg, #ff3b43 0%, ${BASE_COLOR} 50%, #b50f15 100%);
+        @keyframes border-pulse-${CONTAINER_ID} {
+            0% { box-shadow: 0 0 0px rgba(255, 255, 255, 0), 0 0 5px rgba(238, 47, 46, 0.8); }
+            50% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(238, 47, 46, 0.9); }
+            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(238, 47, 46, 1); }
         }
     `;
     document.head.appendChild(style);
 
-    // 3. HTML Structure
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; 
 
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
-            <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-nut-64.png" alt="icon">
-            <span id="${textId}">LẤY MÃ</span>
+            <svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+            <span id="${textId}" style="display:none;"></span>
         </span>
+        <div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>
     `;
-    const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
+
     const scrollAlertHtml = `<div id="${scrollAlertId}">${SCROLL_ALERT_MESSAGE}</div>`;
-    document.body.insertAdjacentHTML('beforeend', alertHtml);
     document.body.insertAdjacentHTML('beforeend', scrollAlertHtml);
+
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
     const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
     const scrollAlertElement = document.getElementById(scrollAlertId);
+
     function copyCodeHandler() {
         copyToClipboard(PASS_CODE, alertElement);
     }
+
     function updateCountdown() {
         if (seconds > 0) {
-            btnText.textContent = `Lấy mã sau ${seconds}s`;
+            btn.classList.add('alert-state');
+            btnText.style.display = 'inline-flex';
+            btn.innerHTML = `<span id="${textId}">Lấy mã sau ${seconds}s</span>`;
             seconds--;
         } else {
             clearInterval(interval);
@@ -221,102 +247,71 @@
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false; 
             incognitoChecked = false; 
-            btn.style.background = ''; 
+            
+            btn.classList.remove('alert-state');
+            btn.classList.add('finished-state');
             btn.classList.remove('disabled-state');
-            btn.classList.remove('paused-state'); 
             btn.style.cursor = 'pointer';
-            btnText.innerHTML = `Mã KM: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: -5px 0 0 3px !important; vertical-align: middle; display: inline-block; width:auto !important;">`;
+            
+            btn.innerHTML = `<span id="${textId}" style="display:inline-flex; align-items:center;">Mã: ${PASS_CODE} <img src="https://rawcdn.githack.com/traffic-user/trafficuser/a8e8df5d0a88e46884763fd2e2fc415ce1d9f0f0/icon-copy.png" alt="Copy" style="height: 14px !important; margin: 0 0 0 5px !important; vertical-align: middle; display: inline-block; width:auto !important;"></span>`;
+            
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
-            restoreInteractionListeners(BASE_COLOR);
         }
     }
+
     function pauseCountdown() {
         if (!counting || isPausedByScroll || seconds <= 0 || interval === null) return; 
         clearInterval(interval);
         interval = null; 
         isPausedByScroll = true;
-        btn.classList.add('paused-state');
     }
+
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btnText.textContent = `Lấy mã sau ${seconds}s`; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
-        btn.classList.remove('paused-state');
     }
+
     function startCountdown() {
         if (counting || seconds <= 0) return; 
         counting = true;
         incognitoChecked = true; 
-        btn.style.background = '';
         btn.classList.add('disabled-state');
         btn.style.cursor = 'not-allowed';
-        removeInteractionListeners();
         btn.removeEventListener('click', checkIncognitoAndStart); 
         updateCountdown();
         interval = setInterval(updateCountdown, 1000);
         window.addEventListener('scroll', handleScroll);
         setScrollStopTimeout();
     }
+
     function showScrollAlert() {
         if (counting && seconds > 0 && !isPausedByScroll) { 
             scrollAlertElement.style.display = 'block';
             pauseCountdown(); 
         }
     }
+
     function hideScrollAlert() {
         scrollAlertElement.style.display = 'none';
         resumeCountdown(); 
     }
     
     function setScrollStopTimeout() {
-          if (scrollTimeout) {
+        if (scrollTimeout) {
             clearTimeout(scrollTimeout);
             scrollTimeout = null;
         }
         scrollTimeout = setTimeout(showScrollAlert, SCROLL_STOP_DELAY);
     }
+
     function handleScroll() {
         if (!counting || seconds <= 0) return;
         hideScrollAlert();
         setScrollStopTimeout();
     }
-    function interactionListeners(enable, baseColor = BASE_COLOR) {
-        function handleMouseEnter() {
-            if (!counting && !isPausedByScroll) btn.style.background = '';
-        }
-        function handleMouseLeave() {
-            if (!counting && !isPausedByScroll) btn.style.background = '';
-        }
-        function handleMouseDown() {
-            if (!counting && !isPausedByScroll) btn.style.background = '';
-        }
-        function handleMouseUp() {
-            if (!counting && !isPausedByScroll) btn.style.background = '';
-        }
 
-        if(enable) {
-            btn.addEventListener('mouseenter', handleMouseEnter);
-            btn.addEventListener('mouseleave', handleMouseLeave);
-            btn.addEventListener('mousedown', handleMouseDown);
-            btn.addEventListener('mouseup', handleMouseUp);
-        } else {
-            btn.removeEventListener('mouseenter', handleMouseEnter);
-            btn.removeEventListener('mouseleave', handleMouseLeave);
-            btn.removeEventListener('mousedown', handleMouseDown);
-            btn.removeEventListener('mouseup', handleMouseUp);
-        }
-    }
-    function removeInteractionListeners() {
-        interactionListeners(false);
-    }
-    function restoreInteractionListeners(baseColor = BASE_COLOR) {
-        if (!counting) {
-            interactionListeners(false);
-            interactionListeners(true, baseColor);
-        }
-    }
     function handleVisibilityChange() {
         if (document.hidden) {
             if (interval) {
@@ -330,25 +325,20 @@
             hideScrollAlert(); 
         } else {
             if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
-                btn.style.background = '';
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
             if (counting && seconds > 0) {
                  setScrollStopTimeout(); 
             }
-            if (seconds === 0 && !counting) {
-                 btn.style.background = ''; 
-                 restoreInteractionListeners(BASE_COLOR); 
-            }
         }
     }
     document.addEventListener('visibilitychange', handleVisibilityChange);
+
     function checkIncognitoAndStart() {  
         if (incognitoChecked && counting) {
             return;
         }
-        removeInteractionListeners();
         detectIncognito().then((result) => {
             if (result.isPrivate) {
                 if (interval) clearInterval(interval);
@@ -360,17 +350,16 @@
                 counting = false;
                 isPausedByScroll = false; 
                 incognitoChecked = false; 
-                btn.style.background = '';
-                btn.classList.add('disabled-state');
-                btn.classList.remove('paused-state');
+                
+                btn.classList.add('alert-state', 'disabled-state');
                 btn.style.cursor = 'default';
-                btnText.textContent = PRIVATE_MODE_MESSAGE;
+                btn.innerHTML = `<span id="${textId}">${PRIVATE_MODE_MESSAGE}</span>`;
+                
                 setTimeout(() => {
-                    btn.style.background = '';
-                    btn.classList.remove('disabled-state');
+                    btn.classList.remove('alert-state', 'disabled-state');
                     btn.style.cursor = 'pointer';
-                    btnText.textContent = 'LẤY MÃ';
-                    restoreInteractionListeners(BASE_COLOR);
+                    btn.innerHTML = `<svg viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg><span id="${textId}" style="display:none;"></span>`;
+                    btn.addEventListener('click', checkIncognitoAndStart);
                 }, 5000);
             } else {
                 incognitoChecked = true; 
@@ -378,178 +367,123 @@
             }
         });
     }
+
     btn.addEventListener('click', checkIncognitoAndStart);
-    restoreInteractionListeners(BASE_COLOR);
+
     const detectIncognito = function () {
-		return new Promise(function (resolve, reject) {
-			var browserName = "Unknown";
-			function __callback(isPrivate) {
-				resolve({
-					isPrivate: isPrivate,
-					browserName: browserName
-				});
-			}
-			function identifyChromium() {
-				var ua = navigator.userAgent;
-				if (ua.match(/Chrome/)) {
-					if (navigator.brave !== undefined) {
-						return "Brave";
-					}
-					else if (ua.match(/Edg/)) {
-						return "Edge";
-					}
-					else if (ua.match(/OPR/)) {
-						return "Opera";
-					}
-					return "Chrome";
-				}
-				else {
-					return "Chromium";
-				}
-			}
-			function assertEvalToString(value) {
-				return value === eval.toString().length;
-			}
-			function isSafari() {
-				var v = navigator.vendor;
-				return (v !== undefined && v.indexOf("Apple") === 0 && assertEvalToString(37));
-			}
-			function isChrome() {
-				var v = navigator.vendor;
-				return (v !== undefined && v.indexOf("Google") === 0 && assertEvalToString(33));
-			}
-			function isFirefox() {
-				return (document.documentElement !== undefined &&
-					document.documentElement.style.MozAppearance !== undefined &&
-					assertEvalToString(37));
-			}
-			function isMSIE() {
-				return (navigator.msSaveBlob !== undefined && assertEvalToString(39));
-			}
-			function newSafariTest() {
-				var tmp_name = String(Math.random());
-				try {
-					var db = window.indexedDB.open(tmp_name, 1);
-					db.onupgradeneeded = function (i) {
-						var _a, _b;
-						var res = (_a = i.target) === null || _a === void 0 ? void 0 : _a.result;
-						try {
-							res.createObjectStore("test", {
-								autoIncrement: true
-							}).put(new Blob);
-							__callback(false);
-						}
-						catch (e) {
-							var message = e;
-							if (e instanceof Error) {
-							    message = (_b = e.message) !== null && _b !== void 0 ? _b : e;
-							}
-							if (typeof message !== 'string') {
-							    return __callback(false);
-							}
-							var matchesExpectedError = /BlobURLs are not yet supported/.test(message);
-							return __callback(matchesExpectedError);
-						}
-						finally {
-							res.close();
-							window.indexedDB.deleteDatabase(tmp_name);
-						}
-					};
-				}
-				catch (e) {
-					return __callback(false);
-				}
-			}
-			function oldSafariTest() {
-				var openDB = window.openDatabase;
-				var storage = window.localStorage;
-				try {
-					openDB(null, null, null, null);
-				}
-				catch (e) {
-					return __callback(true);
-				}
-				try {
-					storage.setItem("test", "1");
-					storage.removeItem("test");
-				}
-				catch (e) {
-					return __callback(true);
-				}
-				return __callback(false);
-			}
-			function safariPrivateTest() {
-				if (navigator.maxTouchPoints !== undefined) {
-					newSafariTest();
-				}
-				else {
-					oldSafariTest();
-				}
-			}
-			function getQuotaLimit() {
-				var w = window;
-				if (w.performance !== undefined &&
-					w.performance.memory !== undefined &&
-					w.performance.memory.jsHeapSizeLimit !== undefined) {
-				return performance.memory.jsHeapSizeLimit;
-				}
-				return 1073741824;
-			}
-			function storageQuotaChromePrivateTest() {
-				navigator.webkitTemporaryStorage.queryUsageAndQuota(function (_, quota) {
-					var quotaInMib = Math.round(quota / (1024 * 1024));
-					var quotaLimitInMib = Math.round(getQuotaLimit() / (1024 * 1024)) * 2;
-					__callback(quotaInMib < quotaLimitInMib);
-				}, function (e) {
-					reject(new Error("detectIncognito somehow failed to query storage quota: " + e.message));
-				});
-			}
-			function oldChromePrivateTest() {
-				var fs = window.webkitRequestFileSystem;
-				var success = function () {
-					__callback(false);
-				};
-				var error = function () {
-					__callback(true);
-				};
-				fs(0, 1, success, error);
-			}
-			function chromePrivateTest() {
-				if (self.Promise !== undefined && self.Promise.allSettled !== undefined) {
-					storageQuotaChromePrivateTest();
-				}
-				else {
-					oldChromePrivateTest();
-				}
-			}
-			function firefoxPrivateTest() {
-				__callback(navigator.serviceWorker === undefined);
-			}
-			function msiePrivateTest() {
-				__callback(window.indexedDB === undefined);
-			}
-			function main() {
-				if (isSafari()) {
-					browserName = 'Safari';
-					safariPrivateTest();
-				}
-				else if (isChrome()) {
-					browserName = identifyChromium();
-					chromePrivateTest();
-				}
-				else if (isFirefox()) {
-					browserName = "Firefox";
-					firefoxPrivateTest();
-				}
-				else if (isMSIE()) {
-					browserName = "Internet Explorer";
-					msiePrivateTest();
-				}
-				else {
-					__callback(false);
-				}
-			}
-			main();
-		});
-	};
+        return new Promise(function (resolve, reject) {
+            var browserName = "Unknown";
+            function __callback(isPrivate) {
+                resolve({
+                    isPrivate: isPrivate,
+                    browserName: browserName
+                });
+            }
+            function identifyChromium() {
+                var ua = navigator.userAgent;
+                if (ua.match(/Chrome/)) {
+                    if (navigator.brave !== undefined) return "Brave";
+                    else if (ua.match(/Edg/)) return "Edge";
+                    else if (ua.match(/OPR/)) return "Opera";
+                    return "Chrome";
+                }
+                return "Chromium";
+            }
+            function assertEvalToString(value) {
+                return value === eval.toString().length;
+            }
+            function isSafari() {
+                var v = navigator.vendor;
+                return (v !== undefined && v.indexOf("Apple") === 0 && assertEvalToString(37));
+            }
+            function isChrome() {
+                var v = navigator.vendor;
+                return (v !== undefined && v.indexOf("Google") === 0 && assertEvalToString(33));
+            }
+            function isFirefox() {
+                return (document.documentElement !== undefined &&
+                    document.documentElement.style.MozAppearance !== undefined &&
+                    assertEvalToString(37));
+            }
+            function isMSIE() {
+                return (navigator.msSaveBlob !== undefined && assertEvalToString(39));
+            }
+            function newSafariTest() {
+                var tmp_name = String(Math.random());
+                try {
+                    var db = window.indexedDB.open(tmp_name, 1);
+                    db.onupgradeneeded = function (i) {
+                        var _a, _b;
+                        var res = (_a = i.target) === null || _a === void 0 ? void 0 : _a.result;
+                        try {
+                            res.createObjectStore("test", { autoIncrement: true }).put(new Blob);
+                            __callback(false);
+                        }
+                        catch (e) {
+                            var message = e;
+                            if (e instanceof Error) {
+                                message = (_b = e.message) !== null && _b !== void 0 ? _b : e;
+                            }
+                            if (typeof message !== 'string') return __callback(false);
+                            var matchesExpectedError = /BlobURLs are not yet supported/.test(message);
+                            return __callback(matchesExpectedError);
+                        }
+                        finally {
+                            res.close();
+                            window.indexedDB.deleteDatabase(tmp_name);
+                        }
+                    };
+                }
+                catch (e) {
+                    return __callback(false);
+                }
+            }
+            function oldSafariTest() {
+                var openDB = window.openDatabase;
+                var storage = window.localStorage;
+                try { openDB(null, null, null, null); } catch (e) { return __callback(true); }
+                try { storage.setItem("test", "1"); storage.removeItem("test"); } catch (e) { return __callback(true); }
+                return __callback(false);
+            }
+            function safariPrivateTest() {
+                if (navigator.maxTouchPoints !== undefined) newSafariTest();
+                else oldSafariTest();
+            }
+            function getQuotaLimit() {
+                var w = window;
+                if (w.performance !== undefined && w.performance.memory !== undefined && w.performance.memory.jsHeapSizeLimit !== undefined) {
+                    return performance.memory.jsHeapSizeLimit;
+                }
+                return 1073741824;
+            }
+            function storageQuotaChromePrivateTest() {
+                navigator.webkitTemporaryStorage.queryUsageAndQuota(function (_, quota) {
+                    var quotaInMib = Math.round(quota / (1024 * 1024));
+                    var quotaLimitInMib = Math.round(getQuotaLimit() / (1024 * 1024)) * 2;
+                    __callback(quotaInMib < quotaLimitInMib);
+                }, function (e) {
+                    reject(new Error("detectIncognito failed: " + e.message));
+                });
+            }
+            function oldChromePrivateTest() {
+                var fs = window.webkitRequestFileSystem;
+                fs(0, 1, function() { __callback(false); }, function() { __callback(true); });
+            }
+            function chromePrivateTest() {
+                if (self.Promise !== undefined && self.Promise.allSettled !== undefined) {
+                    storageQuotaChromePrivateTest();
+                } else {
+                    oldChromePrivateTest();
+                }
+            }
+            function main() {
+                if (isSafari()) { browserName = 'Safari'; safariPrivateTest(); }
+                else if (isChrome()) { browserName = identifyChromium(); chromePrivateTest(); }
+                else if (isFirefox()) { browserName = "Firefox"; __callback(navigator.serviceWorker === undefined); }
+                else if (isMSIE()) { browserName = "Internet Explorer"; __callback(window.indexedDB === undefined); }
+                else { __callback(false); }
+            }
+            main();
+        });
+    };
 })();
