@@ -12,9 +12,9 @@
     const SCROLL_ALERT_MESSAGE = 'Vui lòng thực hiện thao tác cuộn để tiếp tục đếm ngược thời gian!';
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn!';
-    const BASE_COLOR = '#ed1c24'; 
-    const HOVER_COLOR = '#c40b11'; 
-    const ACTIVE_COLOR = '#9a070d'; 
+    const BASE_COLOR = '#ff0000'; 
+    const HOVER_COLOR = '#e60000'; 
+    const ACTIVE_COLOR = '#b30000'; 
 
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
@@ -63,13 +63,14 @@
     const style = document.createElement('style');
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
-            background: linear-gradient(180deg, #F94D4C 0%, #E00706 100%) !important;
-            border: 2px solid #fff;
+            background: linear-gradient(135deg, #ff2a2a 0%, #d60000 100%) !important;
+            border: 1.5px solid rgba(255, 255, 255, 0.8);
             color: #fff;
             font-weight: 700;
             font-size: 14px;
-            border-radius: 7px;
-            padding: 5px 10px;
+            font-family: system-ui, -apple-system, sans-serif;
+            border-radius: 8px;
+            padding: 6px 14px;
             margin: 5px;
             min-width: unset;
             line-height: 20px;
@@ -80,89 +81,104 @@
             text-align: center;
             z-index: 0;
             user-select: none;
-            transition: none;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(255, 0, 0, 0.4), inset 0 1px 0 rgba(255, 255, 255, 0.4);
         }
+
+        .custom-button-${CONTAINER_ID}:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 0, 0, 0.6), inset 0 1px 0 rgba(255, 255, 255, 0.6);
+        }
+
+        .custom-button-${CONTAINER_ID}:active {
+            transform: translateY(1px);
+            box-shadow: 0 2px 8px rgba(255, 0, 0, 0.4);
+        }
+
+        /* Hiệu ứng tia sáng quét qua nút cực kỳ mượt */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
-            top: 0;
-            left: -150%;
-            width: 50%;
-            height: 100%;
-            background: linear-gradient(
-                90deg,
-                transparent,
-                rgba(255, 255, 255, 0.35),
-                transparent
-            );
-            animation: shimmer-${CONTAINER_ID} 3.5s infinite linear;
+            top: -50%;
+            left: -60%;
+            width: 20%;
+            height: 200%;
+            background: rgba(255, 255, 255, 0.5);
+            transform: rotate(30deg);
+            animation: elite-shine 4s infinite linear;
         }
 
-        @keyframes shimmer-${CONTAINER_ID} {
-            0% { left: -100%; }
-            100% { left: 100%; }
+        @keyframes elite-shine {
+            0% { left: -60%; }
+            20% { left: 120%; }
+            100% { left: 120%; }
         }
 
-        /* HIỆU ỨNG ICON SVG (NHỊP ĐẬP) */
+        /* Hiệu ứng icon play kết hợp vòng sáng lan tỏa */
         .custom-button-${CONTAINER_ID} svg.play-icon {
-            height: 25px;
-            width: 25px;
-            margin-right: 6px;
+            height: 22px;
+            width: 22px;
+            margin-right: 7px;
             display: inline-block;
             vertical-align: middle;
-            animation: icon-pulse 1.5s infinite ease-in-out;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.3));
+            animation: icon-glow-pulse 2s infinite ease-in-out;
         }
 
-        @keyframes icon-pulse {
-            0% { transform: scale(1); }
-            50% { transform: scale(1.15); }
-            100% { transform: scale(1); }
+        @keyframes icon-glow-pulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 8px rgba(255,255,255,0.9)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 2px rgba(255,255,255,0.4)); }
         }
 
         .custom-button-${CONTAINER_ID}.disabled-state {
             cursor: not-allowed;
+            transform: none !important;
         }
+
         .custom-button-${CONTAINER_ID} span {
             color: #fff;
             font-weight: 700;
+            letter-spacing: 0.3px;
         }
+
         #copy-alert-${CONTAINER_ID} {
             position: fixed;
             top: 20px;
             right: 20px;
-            background: ${BASE_COLOR};
+            background: #10b981;
             color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
+            padding: 8px 16px;
+            border-radius: 6px;
             display: none;
             z-index: 9999;
             font-weight: bold;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
+
+        /* Thông báo cuộn trang nhỏ gọn, lịch sự, chuyên nghiệp */
         #scroll-alert-${CONTAINER_ID} {
             position: fixed;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
-            padding: 15px 25px;
-            background: rgba(255, 0, 0, 0.95);
+            padding: 12px 22px;
+            background: rgba(20, 20, 20, 0.94);
             color: #ffffff;
-            font-weight: 700;
-            font-size: 16px;
-            border-radius: 10px;
+            font-weight: 500;
+            font-size: 13px;
+            border-radius: 8px;
             text-align: center;
-            line-height: 1.5;
+            line-height: 1.4;
             z-index: 9998;
             display: none;
-            animation: border-pulse 1s infinite alternate; 
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(4px);
         }
-        @keyframes border-pulse {
-            0% { box-shadow: 0 0 0px rgba(255, 255, 255, 0), 0 0 5px rgba(255, 0, 0, 0.8); }
-            50% { box-shadow: 0 0 5px rgba(255, 255, 255, 0.8), 0 0 10px rgba(255, 0, 0, 0.9); }
-            100% { box-shadow: 0 0 10px rgba(255, 255, 255, 0.5), 0 0 15px rgba(255, 0, 0, 1); }
-        }
+
         .custom-button-${CONTAINER_ID}.paused-state {
             background: ${BASE_COLOR};
         }
@@ -173,7 +189,6 @@
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; 
 
-    // Dùng SVG trực tiếp thay vì thẻ <img>
     container.innerHTML = `
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
