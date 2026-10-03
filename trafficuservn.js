@@ -58,15 +58,15 @@
     style.textContent = `
        
         .custom-button-${CONTAINER_ID} {
-            background: ${BASE_COLOR};
-            border: 2px solid #fff;
+            background: linear-gradient(135deg, #ff3b43 0%, ${BASE_COLOR} 50%, #b50f15 100%);
+            border: 1px solid rgba(255, 255, 255, 0.4);
             color: #fff;
             font-weight: 700;
             font-size: 14px;
-            border-radius: 7px;
-            padding: 5px 10px;
+            border-radius: 8px;
+            padding: 8px 16px;
             margin: 5px;
-            min-width: 130px;
+            min-width: 140px;
             line-height: 20px;
             cursor: pointer;
             display: inline-flex;
@@ -75,51 +75,65 @@
             text-align: center;
             z-index: 10;
             user-select: none;
-            transition: none;
+            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
+            box-shadow: 0 4px 15px rgba(237, 28, 36, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.3);
         }
 
-        /* Hiệu ứng lấp lánh chạy qua nút (Shimmer Effect) */
+        /* Hiệu ứng ánh sáng chuyên nghiệp (Professional Shimmer Effect) */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
-            top: -50%;
-            left: -75%;
+            top: -100%;
+            left: -150%;
             width: 50%;
-            height: 200%;
+            height: 300%;
             background: linear-gradient(
-                to right,
-                rgba(255, 255, 255, 0) 0%,
-                rgba(255, 255, 255, 0.4) 50%,
-                rgba(255, 255, 255, 0) 100%
+                90deg,
+                transparent,
+                rgba(255, 255, 255, 0.05),
+                rgba(255, 255, 255, 0.35),
+                rgba(255, 255, 255, 0.05),
+                transparent
             );
-            transform: rotate(25deg);
-            animation: shimmer-effect 2.5s infinite;
+            transform: rotate(30deg);
+            animation: professional-shimmer 3s cubic-bezier(0.4, 0, 0.2, 1) infinite;
             pointer-events: none;
         }
 
-        @keyframes shimmer-effect {
+        @keyframes professional-shimmer {
             0% {
-                left: -75%;
+                left: -150%;
+            }
+            30% {
+                left: 150%;
             }
             100% {
-                left: 125%;
+                left: 150%;
             }
+        }
+
+        .custom-button-${CONTAINER_ID}:hover {
+            box-shadow: 0 6px 20px rgba(237, 28, 36, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+            transform: translateY(-1px);
         }
 
         .custom-button-${CONTAINER_ID}.disabled-state {
             cursor: not-allowed;
+            transform: none !important;
         }
         .custom-button-${CONTAINER_ID} img {
-            height: 25px;
-            margin-right: 5px;
+            height: 22px;
+            margin-right: 8px;
             display: inline-block;
             width: auto;
+            filter: drop-shadow(0 1px 2px rgba(0,0,0,0.2));
         }
         .custom-button-${CONTAINER_ID} span {
             color: #fff;
             font-weight: 700;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.2);
         }
         /* Styles cho thông báo copy */
         #copy-alert-${CONTAINER_ID} {
@@ -166,7 +180,7 @@
         }
         
         .custom-button-${CONTAINER_ID}.paused-state {
-            background: ${BASE_COLOR};
+            background: linear-gradient(135deg, #ff3b43 0%, ${BASE_COLOR} 50%, #b50f15 100%);
         }
     `;
     document.head.appendChild(style);
@@ -207,7 +221,7 @@
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false; 
             incognitoChecked = false; 
-            btn.style.background = BASE_COLOR; 
+            btn.style.background = ''; 
             btn.classList.remove('disabled-state');
             btn.classList.remove('paused-state'); 
             btn.style.cursor = 'pointer';
@@ -235,7 +249,7 @@
         if (counting || seconds <= 0) return; 
         counting = true;
         incognitoChecked = true; 
-        btn.style.background = BASE_COLOR;
+        btn.style.background = '';
         btn.classList.add('disabled-state');
         btn.style.cursor = 'not-allowed';
         removeInteractionListeners();
@@ -270,16 +284,16 @@
     }
     function interactionListeners(enable, baseColor = BASE_COLOR) {
         function handleMouseEnter() {
-            if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.background = '';
         }
         function handleMouseLeave() {
-            if (!counting && !isPausedByScroll) btn.style.background = baseColor;
+            if (!counting && !isPausedByScroll) btn.style.background = '';
         }
         function handleMouseDown() {
-            if (!counting && !isPausedByScroll) btn.style.background = ACTIVE_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.background = '';
         }
         function handleMouseUp() {
-            if (!counting && !isPausedByScroll) btn.style.background = HOVER_COLOR;
+            if (!counting && !isPausedByScroll) btn.style.background = '';
         }
 
         if(enable) {
@@ -316,7 +330,7 @@
             hideScrollAlert(); 
         } else {
             if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
-                btn.style.background = BASE_COLOR;
+                btn.style.background = '';
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
@@ -324,7 +338,7 @@
                  setScrollStopTimeout(); 
             }
             if (seconds === 0 && !counting) {
-                 btn.style.background = BASE_COLOR; 
+                 btn.style.background = ''; 
                  restoreInteractionListeners(BASE_COLOR); 
             }
         }
@@ -346,13 +360,13 @@
                 counting = false;
                 isPausedByScroll = false; 
                 incognitoChecked = false; 
-                btn.style.background = BASE_COLOR;
+                btn.style.background = '';
                 btn.classList.add('disabled-state');
                 btn.classList.remove('paused-state');
                 btn.style.cursor = 'default';
                 btnText.textContent = PRIVATE_MODE_MESSAGE;
                 setTimeout(() => {
-                    btn.style.background = BASE_COLOR;
+                    btn.style.background = '';
                     btn.classList.remove('disabled-state');
                     btn.style.cursor = 'pointer';
                     btnText.textContent = 'LẤY MÃ';
