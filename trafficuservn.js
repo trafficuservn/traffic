@@ -21,36 +21,35 @@
             overflow: hidden;
         }
         
-        /* HIỆU ỨNG ÁNH SÁNG CHẠY NGANG QUA (SHIMMER EFFECT) */
+        /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN (SHIMMER EFFECT) */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -150%;
-            width: 50%;
+            left: -180%;
+            width: 100%; /* Tăng độ rộng của vệt sáng lên 100% để thành bản lớn */
             height: 100%;
             background: linear-gradient(
                 90deg,
                 transparent,
-                rgba(255, 255, 255, 0.4),
+                rgba(255, 255, 255, 0.35), /* Độ trong suốt vừa phải để dải lớn không bị chói quá */
                 transparent
             );
             transform: skewX(-20deg);
-            animation: shimmer-${CONTAINER_ID} 4s infinite;
+            animation: shimmer-${CONTAINER_ID} 4s infinite; /* Tăng thời gian lên 4s để ánh sáng lướt chậm và mượt */
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
             0% {
-                left: -150%;
+                left: -180%;
             }
-            20% {
-                left: 150%;
+            40% { /* Kéo dài khoảng thời gian di chuyển để vệt sáng trôi êm hơn */
+                left: 180%;
             }
             100% {
-                left: 150%;
+                left: 180%; /* Giữ khoảng dừng nhẹ trước khi lặp lại vòng mới */
             }
         }
-
         .custom-button-${CONTAINER_ID}.disabled-state {
             cursor: not-allowed;
         }
