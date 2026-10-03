@@ -65,9 +65,9 @@
             font-weight: 700;
             font-size: 14px;
             border-radius: 7px;
-            padding: 5px 12px;
+            padding: 5px 10px; /* Đã chỉnh padding ngang nhỏ lại để sát chữ và icon */
             margin: 5px;
-            min-width: unset;
+            min-width: unset; /* Bỏ giới hạn chiều rộng tối thiểu */
             line-height: 20px;
             cursor: pointer;
             display: inline-flex;
@@ -80,14 +80,12 @@
             position: relative;
             overflow: hidden;
         }
-        
-        /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN, CHẠY ĐỀU VÀ MƯỢT MÀ */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
             top: 0;
             left: -150%;
-            width: 30%;
+            width: 50%;
             height: 100%;
             background: linear-gradient(
                 90deg,
@@ -95,7 +93,7 @@
                 rgba(255, 255, 255, 0.35),
                 transparent
             );
-            animation: shimmer-${CONTAINER_ID} 2.5s infinite linear;
+            animation: shimmer-${CONTAINER_ID} 3.5s infinite linear;
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
@@ -106,7 +104,6 @@
                 left: 100%;
             }
         }
-
         .custom-button-${CONTAINER_ID}.disabled-state {
             cursor: not-allowed;
         }
@@ -124,7 +121,7 @@
             position: fixed;
             top: 20px;
             right: 20px;
-            background: #E00706;
+            background: ${BASE_COLOR};
             color: white;
             padding: 8px 15px;
             border-radius: 5px;
@@ -162,7 +159,7 @@
             }
         }
         .custom-button-${CONTAINER_ID}.paused-state {
-            background: linear-gradient(180deg, #F94D4C 0%, #E00706 100%) !important;
+            background: ${BASE_COLOR};
         }
     `;
     document.head.appendChild(style);
@@ -188,8 +185,7 @@
     }
     function updateCountdown() {
         if (seconds > 0) {
-            // Đã bỏ chữ "Lấy mã sau", chỉ hiển thị số giây (ví dụ: 67s)
-            btnText.textContent = `${seconds}s`;
+            btnText.textContent = `Lấy mã sau ${seconds}s`;
             seconds--;
         } else {
             clearInterval(interval);
@@ -201,14 +197,14 @@
             scrollAlertElement.style.display = 'none';
             isPausedByScroll = false; 
             incognitoChecked = false; 
-            btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)'; 
+            btn.style.background = BASE_COLOR; 
             btn.classList.remove('disabled-state');
             btn.classList.remove('paused-state'); 
             btn.style.cursor = 'pointer';
-			btnText.innerHTML = `${PASS_CODE} <svg viewBox="0 0 24 24" style="height:14px; width:14px; margin:-5px 0 0 3px; vertical-align:middle; display:inline-block; fill:#fff;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
+            btnText.innerHTML = `${PASS_CODE} <svg viewBox="0 0 24 24" style="height:14px; width:14px; margin:-5px 0 0 3px; vertical-align:middle; display:inline-block; fill:#fff;"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>`;
             btn.removeEventListener('click', checkIncognitoAndStart);
             btn.addEventListener('click', copyCodeHandler);
-            restoreInteractionListeners('linear-gradient(180deg, #F94D4C 0%, #E00706 100%)'); 
+            restoreInteractionListeners(BASE_COLOR); 
         }
     }
     function pauseCountdown() {
@@ -220,7 +216,7 @@
     }
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btnText.textContent = `${seconds}s`; 
+        btnText.textContent = `Lấy mã sau ${seconds}s`; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
         btn.classList.remove('paused-state');
@@ -229,7 +225,7 @@
         if (counting || seconds <= 0) return; 
         counting = true;
         incognitoChecked = true;
-        btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)';
+        btn.style.background = BASE_COLOR;
         btn.classList.add('disabled-state');
         btn.style.cursor = 'not-allowed';
         removeInteractionListeners();
@@ -308,7 +304,7 @@
             hideScrollAlert(); 
         } else {
             if (interval === null && seconds > 0 && !isPausedByScroll && counting) { 
-                btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)';
+                btn.style.background = BASE_COLOR;
                 updateCountdown();
                 interval = setInterval(updateCountdown, 1000);
             }
@@ -316,8 +312,8 @@
                  setScrollStopTimeout(); 
             }
             if (seconds === 0 && !counting) {
-                 btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)'; 
-                 restoreInteractionListeners('linear-gradient(180deg, #F94D4C 0%, #E00706 100%)'); 
+                 btn.style.background = BASE_COLOR; 
+                 restoreInteractionListeners(BASE_COLOR); 
             }
         }
     }
@@ -338,17 +334,17 @@
                 counting = false;
                 isPausedByScroll = false; 
                 incognitoChecked = false; 
-                btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)';
+                btn.style.background = BASE_COLOR;
                 btn.classList.add('disabled-state');
                 btn.classList.remove('paused-state');
                 btn.style.cursor = 'default';
                 btnText.textContent = PRIVATE_MODE_MESSAGE; 
                 setTimeout(() => {
-                    btn.style.background = 'linear-gradient(180deg, #F94D4C 0%, #E00706 100%)';
+                    btn.style.background = BASE_COLOR;
                     btn.classList.remove('disabled-state');
                     btn.style.cursor = 'pointer';
                     btnText.textContent = 'LẤY MÃ';
-                    restoreInteractionListeners('linear-gradient(180deg, #F94D4C 0%, #E00706 100%)');
+                    restoreInteractionListeners(BASE_COLOR);
                 }, 5000);
             } else {
                 incognitoChecked = true; 
@@ -357,7 +353,7 @@
         });
     }
     btn.addEventListener('click', checkIncognitoAndStart);
-    restoreInteractionListeners('linear-gradient(180deg, #F94D4C 0%, #E00706 100%)');
+    restoreInteractionListeners(BASE_COLOR);
     const detectIncognito = function () {
 		return new Promise(function (resolve, reject) {
 			var browserName = "Unknown";
