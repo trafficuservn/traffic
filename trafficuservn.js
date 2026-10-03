@@ -9,12 +9,11 @@
     let incognitoChecked = false; 
     let scrollTimeout; 
     const SCROLL_STOP_DELAY = 20000; 
-    const SCROLL_ALERT_MESSAGE = 'Vui lòng thực hiện thao tác cuộn để tiếp tục đếm ngược thời gian!';
+    const SCROLL_ALERT_MESSAGE = 'Vui lòng cuộn trang để tiếp tục đếm ngược!';
     const REF_DOMAIN_LIST = ["google.com","google.ad","google.ae","google.com.af","google.com.ag","google.com.ai","google.al","google.am","google.co.ao","google.com.ar","google.as","google.at","google.com.au","google.az","google.ba","google.com.bd","google.be","google.bf","google.bg","google.com.bh","google.bi","google.bj","google.com.bn","google.com.bo","google.com.br","google.bs","google.bt","google.co.bw","google.by","google.com.bz","google.ca","google.cd","google.cf","google.cg","google.ch","google.ci","google.co.ck","google.cl","google.cm","google.cn","google.com.co","google.co.cr","google.com.cu","google.cv","google.com.cy","google.cz","google.de","google.dj","google.dk","google.dm","google.com.do","google.dz","google.com.ec","google.ee","google.com.eg","google.es","google.com.et","google.fi","google.com.fj","google.fm","google.fr","google.ga","google.ge","google.gg","google.com.gh","google.com.gi","google.gl","google.gm","google.gr","google.com.gt","google.gy","google.com.hk","google.hn","google.hr","google.ht","google.hu","google.co.id","google.ie","google.co.il","google.im","google.co.in","google.iq","google.is","google.it","google.je","google.com.jm","google.jo","google.co.jp","google.co.ke","google.com.kh","google.ki","google.kg","google.co.kr","google.com.kw","google.kz","google.la","google.com.lb","google.li","google.lk","google.co.ls","google.lt","google.lu","google.lv","google.com.ly","google.co.ma","google.md","google.me","google.mg","google.mk","google.ml","google.com.mm","google.mn","google.ms","google.com.mt","google.mu","google.mv","google.mw","google.com.mx","google.com.my","google.co.mz","google.com.na","google.com.ng","google.com.ni","google.ne","google.nl","google.no","google.com.np","google.nr","google.nu","google.co.nz","google.com.om","google.com.pa","google.com.pe","google.com.pg","google.com.ph","google.com.pk","google.pl","google.pn","google.com.pr","google.ps","google.pt","google.com.py","google.com.qa","google.ro","google.ru","google.rw","google.com.sa","google.com.sb","google.sc","google.se","google.com.sg","google.sh","google.si","google.sk","google.com.sl","google.sn","google.so","google.sm","google.sr","google.st","google.com.sv","google.td","google.tg","google.co.th","google.com.tj","google.tl","google.tm","google.tn","google.to","google.com.tr","google.tt","google.com.tw","google.co.tz","google.com.ua","google.co.ug","google.co.uk","google.com.uy","google.co.uz","google.com.vc","google.co.ve","google.vg","google.co.vi","google.com.vn","google.vu","google.ws","google.rs","google.co.za","google.co.zm","google.co.zw","google.cat"];
     const PRIVATE_MODE_MESSAGE = 'Vui lòng tắt chế độ Ẩn danh để tiếp tục. Xin cảm ơn!';
     const BASE_COLOR = '#ff0000'; 
-    const HOVER_COLOR = '#e60000'; 
-    const ACTIVE_COLOR = '#b30000'; 
+    const HOVER_COLOR = '-webkit-linear-gradient';
 
     function copyToClipboard(text, alertElement) {
         if (navigator.clipboard) {
@@ -113,10 +112,9 @@
             100% { left: 120%; }
         }
 
-        /* Đã tăng kích thước icon lên 27px cho cân đối với chữ */
         .custom-button-${CONTAINER_ID} svg.play-icon {
-            height: 29px;
-            width: 29px;
+            height: 27px;
+            width: 27px;
             margin-right: 8px;
             display: inline-block;
             vertical-align: middle;
@@ -140,38 +138,52 @@
             letter-spacing: 0.3px;
         }
 
+        /* BẢNG "ĐÃ SAO CHÉP MÃ!": NẰM NGAY TRÊN NÚT, NỀN ĐEN TRONG SUỐT (GLASSMORPHISM) */
         #copy-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            background: #10b981;
-            color: white;
-            padding: 8px 16px;
+            position: absolute;
+            bottom: 125%;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(0, 0, 0, 0.82);
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+            color: #ffffff;
+            padding: 6px 12px;
             border-radius: 6px;
             display: none;
             z-index: 9999;
-            font-weight: bold;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            font-weight: 600;
+            font-size: 12px;
+            white-space: nowrap;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            animation: fadeInAlert 0.2s ease-out;
         }
 
+        @keyframes fadeInAlert {
+            from { opacity: 0; transform: translateX(-50%) translateY(4px); }
+            to { opacity: 1; transform: translateX(-50%) translateY(0); }
+        }
+
+        /* THÔNG BÁO CUỘN TRANG */
         #scroll-alert-${CONTAINER_ID} {
-            position: fixed;
-            top: 50%;
+            position: absolute;
+            bottom: 125%;
             left: 50%;
-            transform: translate(-50%, -50%);
-            padding: 12px 22px;
-            background: rgba(20, 20, 20, 0.94);
+            transform: translateX(-50%);
+            padding: 8px 14px;
+            background: rgba(0, 0, 0, 0.85);
+            backdrop-filter: blur(6px);
             color: #ffffff;
-            font-weight: 500;
-            font-size: 13px;
-            border-radius: 8px;
+            font-weight: 600;
+            font-size: 12px;
+            border-radius: 6px;
             text-align: center;
-            line-height: 1.4;
+            white-space: nowrap;
             z-index: 9998;
             display: none;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
             border: 1px solid rgba(255, 255, 255, 0.15);
-            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.4);
-            backdrop-filter: blur(4px);
         }
 
         .custom-button-${CONTAINER_ID}.paused-state {
@@ -183,8 +195,15 @@
     const buttonId = `get-code-btn-${CONTAINER_ID}`;
     const textId = `button-text-${CONTAINER_ID}`;
     const scrollAlertId = `scroll-alert-${CONTAINER_ID}`; 
+    const copyAlertId = `copy-alert-${CONTAINER_ID}`;
+
+    // Định vị container để chứa thông báo chuẩn xác ngay trên nút
+    container.style.position = 'relative';
+    container.style.display = 'inline-block';
 
     container.innerHTML = `
+        <div id="${copyAlertId}">Đã sao chép mã!</div>
+        <div id="${scrollAlertId}">${SCROLL_ALERT_MESSAGE}</div>
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
@@ -194,14 +213,9 @@
         </span>
     `;
 
-    const alertHtml = `<div id="copy-alert-${CONTAINER_ID}">Đã sao chép mã!</div>`;
-    const scrollAlertHtml = `<div id="${scrollAlertId}">${SCROLL_ALERT_MESSAGE}</div>`;
-    document.body.insertAdjacentHTML('beforeend', alertHtml);
-    document.body.insertAdjacentHTML('beforeend', scrollAlertHtml); 
-
     const btn = document.getElementById(buttonId);
     const btnText = document.getElementById(textId);
-    const alertElement = document.getElementById(`copy-alert-${CONTAINER_ID}`);
+    const alertElement = document.getElementById(copyAlertId);
     const scrollAlertElement = document.getElementById(scrollAlertId);
 
     function copyCodeHandler() {
