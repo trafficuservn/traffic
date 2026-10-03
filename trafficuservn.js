@@ -36,7 +36,7 @@
                 transparent
             );
             transform: skewX(-20deg);
-            animation: shimmer-${CONTAINER_ID} 2.5s infinite;
+            animation: shimmer-${CONTAINER_ID} 4s infinite;
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
