@@ -74,8 +74,8 @@
             font-weight: 700;
             font-size: 14px;
             font-family: system-ui, -apple-system, sans-serif;
-            border-radius: 6px;
-            padding: 3px 12px;
+            border-radius: 3px;
+            padding: 2px 10px;
             margin: 5px;
             min-width: unset;
             line-height: 20px;
