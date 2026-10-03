@@ -81,12 +81,12 @@
             overflow: hidden;
         }
         
-        /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN (SHIMMER EFFECT) */
+       /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN (SHIMMER EFFECT) */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
             top: 0;
-            left: -100%;
+            left: -150%;
             width: 100%;
             height: 100%;
             background: linear-gradient(
@@ -96,18 +96,15 @@
                 transparent
             );
             transform: skewX(-20deg);
-            animation: shimmer-${CONTAINER_ID} 14s infinite;
+            animation: shimmer-${CONTAINER_ID} 3.5s infinite linear; /* Dùng linear để chuyển động đều đặn */
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
             0% {
-                left: -100%;
-            }
-            40% {
-                left: 100%;
+                left: -150%;
             }
             100% {
-                left: 100%;
+                left: 150%; /* Chạy thẳng một mạch từ trái qua phải trong suốt thời gian */
             }
         }
 
