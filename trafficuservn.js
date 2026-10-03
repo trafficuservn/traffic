@@ -81,7 +81,7 @@
             overflow: hidden;
         }
         
-       /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN (SHIMMER EFFECT) */
+        /* HIỆU ỨNG ÁNH SÁNG BẢN LỚN, CHẠY ĐỀU VÀ MƯỢT MÀ */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
@@ -96,15 +96,15 @@
                 transparent
             );
             transform: skewX(-20deg);
-            animation: shimmer-${CONTAINER_ID} 3.5s infinite linear; /* Dùng linear để chuyển động đều đặn */
+            animation: shimmer-${CONTAINER_ID} 3.5s infinite linear;
         }
 
         @keyframes shimmer-${CONTAINER_ID} {
             0% {
-                left: -150%;
+                left: -100%;
             }
             100% {
-                left: 150%; /* Chạy thẳng một mạch từ trái qua phải trong suốt thời gian */
+                left: 100%;
             }
         }
 
@@ -189,7 +189,8 @@
     }
     function updateCountdown() {
         if (seconds > 0) {
-            btnText.textContent = `Lấy mã sau ${seconds}s`;
+            // Đã bỏ chữ "Lấy mã sau", chỉ hiển thị số giây (ví dụ: 67s)
+            btnText.textContent = `${seconds}s`;
             seconds--;
         } else {
             clearInterval(interval);
@@ -220,7 +221,7 @@
     }
     function resumeCountdown() {
         if (!counting || !isPausedByScroll || seconds <= 0 || interval !== null) return;
-        btnText.textContent = `Lấy mã sau ${seconds}s`; 
+        btnText.textContent = `${seconds}s`; 
         interval = setInterval(updateCountdown, 1000);
         isPausedByScroll = false;
         btn.classList.remove('paused-state');
