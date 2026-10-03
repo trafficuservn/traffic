@@ -64,7 +64,7 @@
     style.textContent = `
         .custom-button-${CONTAINER_ID} {
             background: linear-gradient(135deg, #ff2a2a 0%, #d60000 100%) !important;
-            border: 2px solid #ffffff !important; /* Viền trắng phẳng, sắc nét, không loang lổ */
+            border: 2px solid #ffffff !important;
             color: #fff;
             font-weight: 700;
             font-size: 14px;
@@ -84,7 +84,7 @@
             transition: transform 0.15s ease;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2); /* Đổ bóng nhẹ gọn gàng bên dưới, không bị sáng loang màu */
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.2);
         }
 
         .custom-button-${CONTAINER_ID}:hover {
@@ -95,7 +95,6 @@
             transform: translateY(1px);
         }
 
-        /* Hiệu ứng ánh sáng quét qua mượt mà */
         .custom-button-${CONTAINER_ID}::after {
             content: '';
             position: absolute;
@@ -114,11 +113,11 @@
             100% { left: 120%; }
         }
 
-        /* Hiệu ứng icon play nhịp đập tinh tế */
+        /* Đã tăng kích thước icon lên 27px cho cân đối với chữ */
         .custom-button-${CONTAINER_ID} svg.play-icon {
-            height: 22px;
-            width: 22px;
-            margin-right: 7px;
+            height: 27px;
+            width: 27px;
+            margin-right: 8px;
             display: inline-block;
             vertical-align: middle;
             animation: icon-glow-pulse 2s infinite ease-in-out;
@@ -155,7 +154,6 @@
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
         }
 
-        /* Thông báo cuộn trang gọn gàng, tinh tế */
         #scroll-alert-${CONTAINER_ID} {
             position: fixed;
             top: 50%;
