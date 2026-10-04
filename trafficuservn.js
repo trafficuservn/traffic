@@ -215,7 +215,7 @@
         <span id="${buttonId}" class="custom-button-${CONTAINER_ID}">
             <svg class="play-icon" viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                 <circle cx="12" cy="12" r="10"></circle>
-                <polygon points="10 8 16 12 10 16 10 8" fill="#fff" stroke="none"></polygon>
+                <polygon points="9 7 17 12 9 17 9 7" fill="#fff" stroke="none"></polygon>
             </svg>
             <span id="${textId}">LẤY MÃ</span>
         </span>
