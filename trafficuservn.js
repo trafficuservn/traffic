@@ -68,7 +68,7 @@
         }
 
         .custom-button-${CONTAINER_ID} {
-            background: linear-gradient(90deg, #ff2a2a 0%, #d60000 100%) !important;
+            background: linear-gradient(180deg, #FF4D4D 0%, #D80000 100%) !important;
             border: 2px solid #ffffff !important;
             color: #fff;
             font-weight: 700;
